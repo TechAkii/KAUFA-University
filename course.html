@@ -1,0 +1,1298 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Courses - KAUFA University</title>
+
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="icon" type="image/png" href="2.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --green: #2e7d32;
+            --green-dark: #1b5e20;
+            --green-light: #4caf50;
+            --green-pale: #e8f5e9;
+            --green-mid: #c8e6c9;
+            --orange: #ff8f00;
+            --dark: #0f1923;
+            --text: #2c2c2c;
+            --muted: #666;
+            --border: #e5e5e5;
+            --card-bg: #fff;
+            --bg: #f7f9f7;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            color: var(--text);
+            background: var(--bg);
+        }
+
+        /* ── HEADER ── */
+        header {
+            background: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 40px;
+            border-bottom: 1px solid var(--border);
+        }
+        .mail-location a {
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            margin-right: 12px;
+        }
+        .mail-location a:hover { color: var(--green); }
+        .header-buttons { display: flex; gap: 12px; align-items: center; }
+        .login-btn a {
+            text-decoration: none;
+            color: var(--green);
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        .contact-btn {
+            background: var(--green);
+            color: #fff;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.2s;
+        }
+        .contact-btn:hover { background: var(--green-dark); }
+
+        /* ── HERO ── */
+        .courses-hero {
+            background: var(--dark);
+            position: relative;
+            overflow: hidden;
+            padding: 100px 40px 80px;
+            text-align: center;
+            color: #fff;
+        }
+        .courses-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 80% 60% at 20% 50%, rgba(46,125,50,0.45) 0%, transparent 70%),
+                radial-gradient(ellipse 60% 80% at 80% 20%, rgba(76,175,80,0.25) 0%, transparent 60%);
+        }
+        .courses-hero::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Ccircle cx='40' cy='40' r='1' fill='%234caf50' fill-opacity='0.12'/%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.6;
+        }
+        .hero-content { position: relative; z-index: 2; max-width: 720px; margin: 0 auto; }
+        .hero-tag {
+            display: inline-block;
+            background: rgba(76,175,80,0.2);
+            border: 1px solid rgba(76,175,80,0.4);
+            color: #81c784;
+            font-size: 0.78rem;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            padding: 6px 18px;
+            border-radius: 50px;
+            margin-bottom: 20px;
+        }
+        .courses-hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.2rem, 5.5vw, 3.8rem);
+            line-height: 1.15;
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+        .courses-hero h1 em {
+            font-style: normal;
+            color: #81c784;
+        }
+        .courses-hero p {
+            font-size: 1.05rem;
+            opacity: 0.8;
+            line-height: 1.7;
+            margin-bottom: 40px;
+            max-width: 560px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 48px;
+            flex-wrap: wrap;
+        }
+        .hero-stat { text-align: center; }
+        .hero-stat .num {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #81c784;
+            display: block;
+        }
+        .hero-stat span:last-child {
+            font-size: 0.82rem;
+            opacity: 0.65;
+            letter-spacing: 0.5px;
+        }
+
+        /* ── SEARCH & FILTER BAR ── */
+        .filter-bar {
+            background: #fff;
+            border-bottom: 1px solid var(--border);
+            padding: 20px 40px;
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            flex-wrap: wrap;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+        .search-input-wrap {
+            position: relative;
+            flex: 1;
+            min-width: 200px;
+            max-width: 340px;
+        }
+        .search-input-wrap i {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+        .search-input-wrap input {
+            width: 100%;
+            padding: 11px 14px 11px 38px;
+            border: 1.5px solid var(--border);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-family: 'DM Sans', sans-serif;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .search-input-wrap input:focus { border-color: var(--green-light); }
+        .filter-group { display: flex; gap: 8px; flex-wrap: wrap; }
+        .filter-chip {
+            padding: 9px 18px;
+            border-radius: 50px;
+            border: 1.5px solid var(--border);
+            background: #fff;
+            font-size: 0.84rem;
+            font-family: 'DM Sans', sans-serif;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: var(--muted);
+            font-weight: 500;
+        }
+        .filter-chip:hover { border-color: var(--green-light); color: var(--green); }
+        .filter-chip.active {
+            background: var(--green);
+            border-color: var(--green);
+            color: #fff;
+        }
+        .results-count {
+            margin-left: auto;
+            font-size: 0.85rem;
+            color: var(--muted);
+            white-space: nowrap;
+        }
+
+        /* ── MAIN LAYOUT ── */
+        .main-layout {
+            max-width: 1280px;
+            margin: 48px auto 80px;
+            padding: 0 28px;
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            gap: 36px;
+            align-items: start;
+        }
+
+        /* ── SIDEBAR ── */
+        .course-sidebar { position: sticky; top: 90px; }
+        .sidebar-panel {
+            background: #fff;
+            border-radius: 16px;
+            padding: 28px;
+            box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+            margin-bottom: 20px;
+        }
+        .sidebar-panel h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            color: var(--dark);
+            margin-bottom: 16px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--green-pale);
+        }
+        .level-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 0;
+            cursor: pointer;
+            font-size: 0.88rem;
+            color: var(--text);
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .level-option:last-child { border-bottom: none; }
+        .level-option input[type="checkbox"] { accent-color: var(--green); width: 16px; height: 16px; }
+        .level-count {
+            margin-left: auto;
+            background: var(--green-pale);
+            color: var(--green);
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 50px;
+        }
+        .duration-slider { width: 100%; accent-color: var(--green); margin: 12px 0 6px; }
+        .duration-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.78rem;
+            color: var(--muted);
+        }
+        .fee-range { display: flex; flex-direction: column; gap: 10px; }
+        .fee-range label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.87rem;
+            cursor: pointer;
+        }
+        .fee-range input[type="radio"] { accent-color: var(--green); }
+        .clear-btn {
+            width: 100%;
+            padding: 10px;
+            background: none;
+            border: 1.5px solid var(--border);
+            border-radius: 8px;
+            font-size: 0.85rem;
+            color: var(--muted);
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'DM Sans', sans-serif;
+        }
+        .clear-btn:hover { border-color: var(--green); color: var(--green); }
+
+        /* ── COURSE CARDS ── */
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+        }
+        .course-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 2px 14px rgba(0,0,0,0.06);
+            transition: transform 0.3s cubic-bezier(.4,0,.2,1), box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        .course-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 18px 48px rgba(0,0,0,0.13);
+        }
+        .card-thumb {
+            position: relative;
+            overflow: hidden;
+            height: 190px;
+        }
+        .card-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+        .course-card:hover .card-thumb img { transform: scale(1.08); }
+        .card-thumb-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.45) 0%, transparent 55%);
+        }
+        .card-level {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 50px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        .level-undergraduate { background: #e3f2fd; color: #1565c0; }
+        .level-postgraduate { background: #fce4ec; color: #880e4f; }
+        .level-professional { background: #fff3e0; color: #e65100; }
+        .card-duration {
+            position: absolute;
+            bottom: 12px;
+            right: 14px;
+            color: #fff;
+            font-size: 0.78rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-weight: 500;
+        }
+        .card-wishlist {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            background: rgba(255,255,255,0.9);
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #ccc;
+            transition: color 0.2s, transform 0.2s;
+            font-size: 0.9rem;
+        }
+        .card-wishlist:hover { color: #e53935; transform: scale(1.15); }
+        .card-wishlist.saved { color: #e53935; }
+
+        .card-content { padding: 22px; flex: 1; display: flex; flex-direction: column; }
+        .card-dept {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--green);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+        .card-content h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.08rem;
+            color: var(--dark);
+            line-height: 1.4;
+            margin-bottom: 10px;
+        }
+        .card-content p {
+            font-size: 0.85rem;
+            color: var(--muted);
+            line-height: 1.65;
+            margin-bottom: 16px;
+            flex: 1;
+        }
+        .card-details {
+            display: flex;
+            gap: 16px;
+            font-size: 0.8rem;
+            color: var(--muted);
+            margin-bottom: 18px;
+            flex-wrap: wrap;
+        }
+        .card-details span { display: flex; align-items: center; gap: 5px; }
+        .card-details i { color: var(--green-light); }
+
+        .card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
+        }
+        .card-price { display: flex; flex-direction: column; }
+        .card-price .price-label { font-size: 0.72rem; color: var(--muted); }
+        .card-price .price-amount {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--dark);
+        }
+        .card-price .price-period {
+            font-size: 0.72rem;
+            color: var(--muted);
+            font-weight: 400;
+        }
+        .enroll-btn {
+            background: var(--green);
+            color: #fff;
+            border: none;
+            padding: 9px 20px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            transition: background 0.2s, transform 0.2s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .enroll-btn:hover { background: var(--green-dark); transform: scale(1.04); color: #fff; }
+
+        /* ── FEATURED HORIZONTAL CARD ── */
+        .featured-row {
+            grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            background: linear-gradient(135deg, var(--dark) 0%, #1a2e1a 100%);
+            border-radius: 16px;
+            overflow: hidden;
+            color: #fff;
+            box-shadow: 0 4px 28px rgba(0,0,0,0.15);
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+        }
+        .featured-row:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 44px rgba(0,0,0,0.22);
+        }
+        .featured-row::before {
+            content: '⭐ MOST POPULAR';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: var(--orange);
+            color: #fff;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 5px 14px;
+            border-radius: 50px;
+            letter-spacing: 1px;
+            z-index: 2;
+        }
+        .featured-row img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.65;
+        }
+        .featured-row-content {
+            padding: 44px 44px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .featured-row-content .dept { font-size: 0.75rem; letter-spacing: 2px; color: #81c784; text-transform: uppercase; margin-bottom: 12px; }
+        .featured-row-content h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.7rem;
+            line-height: 1.3;
+            margin-bottom: 14px;
+        }
+        .featured-row-content p { font-size: 0.92rem; opacity: 0.75; line-height: 1.7; margin-bottom: 24px; max-width: 520px; }
+        .featured-row-meta {
+            display: flex;
+            gap: 24px;
+            margin-bottom: 28px;
+            font-size: 0.85rem;
+            opacity: 0.8;
+            flex-wrap: wrap;
+        }
+        .featured-row-meta span { display: flex; align-items: center; gap: 6px; }
+        .featured-row-meta i { color: #81c784; }
+        .featured-price-row {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+        .featured-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+        }
+        .featured-price span { font-size: 0.8rem; opacity: 0.6; font-weight: 400; }
+        .enroll-btn-lg {
+            background: var(--green-light);
+            color: #fff;
+            border: none;
+            padding: 12px 32px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            transition: background 0.2s, transform 0.2s;
+            text-decoration: none;
+        }
+        .enroll-btn-lg:hover { background: var(--green); color: #fff; transform: scale(1.04); }
+
+        /* ── SECTION LABELS ── */
+        .section-heading {
+            grid-column: 1 / -1;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 12px;
+        }
+        .section-heading h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--dark);
+        }
+        .section-heading .see-all {
+            font-size: 0.85rem;
+            color: var(--green);
+            font-weight: 600;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: gap 0.2s;
+        }
+        .section-heading .see-all:hover { gap: 10px; }
+
+        /* ── WHY KAUFA STRIP ── */
+        .why-strip {
+            background: var(--green-pale);
+            padding: 60px 40px;
+            text-align: center;
+            margin-bottom: 0;
+        }
+        .why-strip h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--dark);
+            margin-bottom: 10px;
+        }
+        .why-strip > p { color: var(--muted); margin-bottom: 48px; font-size: 1rem; }
+        .why-grid {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            flex-wrap: wrap;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .why-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 36px 28px;
+            width: 220px;
+            box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+            transition: transform 0.3s;
+        }
+        .why-card:hover { transform: translateY(-6px); }
+        .why-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--green-pale);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 18px;
+            font-size: 1.5rem;
+            color: var(--green);
+        }
+        .why-card h4 {
+            font-weight: 700;
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+            color: var(--dark);
+        }
+        .why-card p { font-size: 0.83rem; color: var(--muted); line-height: 1.6; }
+
+        /* ── CTA ── */
+        .cta-section {
+            background: linear-gradient(135deg, var(--green-dark), var(--green));
+            color: #fff;
+            text-align: center;
+            padding: 80px 40px;
+        }
+        .cta-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            margin-bottom: 14px;
+        }
+        .cta-section p { opacity: 0.85; margin-bottom: 32px; font-size: 1.05rem; }
+        .cta-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+        .cta-primary {
+            background: #fff;
+            color: var(--green);
+            border: none;
+            padding: 14px 36px;
+            border-radius: 50px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-decoration: none;
+        }
+        .cta-primary:hover { transform: scale(1.04); box-shadow: 0 8px 24px rgba(0,0,0,0.2); color: var(--green-dark); }
+        .cta-secondary {
+            background: transparent;
+            color: #fff;
+            border: 2px solid rgba(255,255,255,0.6);
+            padding: 14px 36px;
+            border-radius: 50px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+        .cta-secondary:hover { border-color: #fff; background: rgba(255,255,255,0.1); color: #fff; }
+
+        /* ── FOOTER ── */
+        #contact-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 32px;
+            justify-content: space-between;
+            background: #0f1923;
+            color: #ccc;
+            padding: 60px 60px 40px;
+        }
+        #contact-section h1 { font-size: 1.1rem; font-weight: 700; color: #fff; margin-bottom: 12px; }
+        #contact-section a { color: #bbb; text-decoration: none; transition: color 0.2s; }
+        #contact-section a:hover { color: #4caf50; }
+        #contact-section ul { list-style: none; }
+        #contact-section ul li { margin-bottom: 8px; font-size: 0.9rem; }
+        .contact4 .input-box { display: flex; gap: 0; margin-top: 12px; }
+        .contact4 .input-box input {
+            padding: 10px 16px;
+            border: none;
+            border-radius: 4px 0 0 4px;
+            font-size: 0.9rem;
+            width: 200px;
+        }
+        .contact4 .input-box button {
+            background: var(--green);
+            color: #fff;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .contact4 p { font-size: 0.88rem; line-height: 1.6; }
+        .contact1 img { height: 50px; margin-bottom: 8px; }
+        .contact1 a { font-size: 1.1rem; margin-right: 10px; color: #bbb; }
+
+        /* ── NO RESULTS ── */
+        .no-results {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 60px 20px;
+            display: none;
+        }
+        .no-results i { font-size: 3rem; color: #ccc; margin-bottom: 16px; display: block; }
+        .no-results h3 { color: var(--dark); margin-bottom: 8px; }
+        .no-results p { color: var(--muted); font-size: 0.9rem; }
+
+        /* ── ANIMATIONS ── */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(28px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .animate-in { animation: fadeUp 0.55s ease forwards; }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 1024px) {
+            .main-layout { grid-template-columns: 1fr; }
+            .course-sidebar { position: static; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        }
+        @media (max-width: 768px) {
+            header { flex-direction: column; gap: 8px; padding: 12px 20px; }
+            .filter-bar { padding: 14px 20px; }
+            .featured-row { grid-template-columns: 1fr; }
+            .featured-row img { height: 200px; }
+            .featured-row-content { padding: 28px 24px; }
+            .course-sidebar { grid-template-columns: 1fr; }
+            #contact-section { padding: 40px 24px; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="mail-location">
+            <a href="mailto:info@kaufa.com"><i class="fa-regular fa-envelope"></i>&nbsp; info@kaufa.com</a>
+            &nbsp;&nbsp;&nbsp;
+            <a href="https://www.google.com/maps/place/Bentota/">
+                <i class="fa-solid fa-location-dot"></i>&nbsp; Sirisewana, Bentota, Sri Lanka</a>
+        </div>
+        <div class="header-buttons">
+            <div class="login-btn">
+                <a href="login.html"><i class="fa-regular fa-user"></i> <span>Login</span></a>
+            </div>
+            <a href="#contact-section"><button class="contact-btn">Contact Us</button></a>
+        </div>
+    </header>
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="main.html"><img src="1.png" alt="logo" style="height:60px; padding:0; margin:0;"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
+                aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarScroll">
+                <ul class="navbar-nav mx-auto my-3 my-lg-2 navbar-nav-scroll" style="--bs-scroll-height:170px;">
+                    <li class="nav-item mx-3"><a class="nav-link" href="main.html#home">Home</a></li>
+                    <li class="nav-item mx-3"><a class="nav-link" href="main.html#about">About Us</a></li>
+                    <li class="nav-item mx-3"><a class="nav-link" href="main.html#gallery-section">Facilities</a></li>
+                    <li class="nav-item mx-3"><a class="nav-link" href="main.html#accommadation-section">Accomadations</a></li>
+                    <li class="nav-item mx-3"><a class="nav-link active" aria-current="page" href="course.html">Courses</a></li>
+                    <li class="nav-item mx-3"><a class="nav-link" href="blog.html">Blog</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Admission</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="main.html#admission">Academic staff</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="main.html#admission">Students</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="courses-hero">
+        <div class="hero-content">
+            <span class="hero-tag"><i class="fa-solid fa-book-open"></i>&nbsp; Our Academic Programs</span>
+            <h1>Find Your <em>Perfect</em><br>Course at KAUFA</h1>
+            <p>Explore over 99 undergraduate, postgraduate, and professional programs designed to launch your future in a rapidly evolving world.</p>
+            <div class="hero-stats">
+                <div class="hero-stat"><span class="num">99+</span><span>Courses Offered</span></div>
+                <div class="hero-stat"><span class="num">10+</span><span>Expert Faculty</span></div>
+                <div class="hero-stat"><span class="num">4</span><span>Disciplines</span></div>
+                <div class="hero-stat"><span class="num">3+</span><span>Years of Excellence</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FILTER BAR -->
+    <div class="filter-bar">
+        <div class="search-input-wrap">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="courseSearch" placeholder="Search courses…" oninput="applyFilters()">
+        </div>
+        <div class="filter-group">
+            <button class="filter-chip active" onclick="setFilter('all', this)">All</button>
+            <button class="filter-chip" onclick="setFilter('cs', this)">Computer Science</button>
+            <button class="filter-chip" onclick="setFilter('med', this)">Medical</button>
+            <button class="filter-chip" onclick="setFilter('nano', this)">Nanotechnology</button>
+            <button class="filter-chip" onclick="setFilter('ai', this)">AI & ML</button>
+            <button class="filter-chip" onclick="setFilter('business', this)">Business</button>
+            <button class="filter-chip" onclick="setFilter('lang', this)">Languages</button>
+        </div>
+        <span class="results-count" id="resultsCount">Showing 9 courses</span>
+    </div>
+
+    <!-- MAIN LAYOUT -->
+    <div class="main-layout">
+
+        <!-- SIDEBAR -->
+        <aside class="course-sidebar">
+            <div class="sidebar-panel">
+                <h4><i class="fa-solid fa-layer-group" style="color:var(--green)"></i> Level</h4>
+                <label class="level-option"><input type="checkbox" checked onchange="applyFilters()"> Undergraduate <span class="level-count">4</span></label>
+                <label class="level-option"><input type="checkbox" checked onchange="applyFilters()"> Postgraduate <span class="level-count">3</span></label>
+                <label class="level-option"><input type="checkbox" checked onchange="applyFilters()"> Professional <span class="level-count">2</span></label>
+            </div>
+            <div class="sidebar-panel">
+                <h4><i class="fa-solid fa-clock" style="color:var(--green)"></i> Duration</h4>
+                <input type="range" class="duration-slider" min="1" max="4" value="4" oninput="updateDuration(this)">
+                <div class="duration-labels"><span>1 Year</span><span id="durationVal">Up to 4 Years</span></div>
+            </div>
+            <div class="sidebar-panel">
+                <h4><i class="fa-solid fa-tag" style="color:var(--green)"></i> Fee Range</h4>
+                <div class="fee-range">
+                    <label><input type="radio" name="fee" value="all" checked onchange="applyFilters()"> All Fees</label>
+                    <label><input type="radio" name="fee" value="low" onchange="applyFilters()"> Under LKR 200,000</label>
+                    <label><input type="radio" name="fee" value="mid" onchange="applyFilters()"> LKR 200k – 500k</label>
+                    <label><input type="radio" name="fee" value="high" onchange="applyFilters()"> Above LKR 500,000</label>
+                </div>
+            </div>
+            <div class="sidebar-panel">
+                <button class="clear-btn" onclick="clearFilters()"><i class="fa-solid fa-rotate-left"></i>&nbsp; Clear All Filters</button>
+            </div>
+        </aside>
+
+        <!-- COURSES GRID -->
+        <div>
+            <div class="courses-grid" id="coursesGrid">
+
+                <!-- FEATURED CARD -->
+                <div class="featured-row" data-cat="ai" data-level="postgraduate" data-fee="high">
+                    <img src="https://img.freepik.com/premium-photo/future-artificial-intelligence-robot-network-system-background_432372-88.jpg" alt="AI/ML">
+                    <div class="featured-row-content">
+                        <p class="dept">Department of Computing</p>
+                        <h2>AI & Machine Learning Engineering</h2>
+                        <p>Master neural networks, deep learning, and data science. Learn to build intelligent systems that transform industries — from healthcare to autonomous vehicles.</p>
+                        <div class="featured-row-meta">
+                            <span><i class="fa-solid fa-graduation-cap"></i> Postgraduate</span>
+                            <span><i class="fa-solid fa-clock"></i> 2 Years</span>
+                            <span><i class="fa-solid fa-users"></i> 30 seats</span>
+                            <span><i class="fa-solid fa-star" style="color:#ffd54f"></i> 4.9 / 5.0</span>
+                        </div>
+                        <div class="featured-price-row">
+                            <div class="featured-price">LKR 600,000 <span>/ year</span></div>
+                            <a href="STDregister.html" class="enroll-btn-lg">Enroll Now <i class="fa-solid fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECTION HEADING -->
+                <div class="section-heading">
+                    <h2>All Programs</h2>
+                    <a href="#" class="see-all">View All <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+
+                <!-- CARD 1 -->
+                <div class="course-card animate-in" data-cat="cs" data-level="undergraduate" data-fee="mid">
+                    <div class="card-thumb">
+                        <img src="https://www.bucknell.edu/sites/default/files/styles/2_1_l/public/libris/C00001GOQFVeT0YE/G0000xGr1JWPRvo0/CompSci059.jpg" alt="CS">
+                        <div class="card-thumb-overlay"></div>
+                        <span class="card-level level-undergraduate">Undergraduate</span>
+                        <button class="card-wishlist" onclick="toggleWishlist(this)"><i class="fa-regular fa-heart"></i></button>
+                        <span class="card-duration"><i class="fa-regular fa-clock"></i> 3 Years</span>
+                    </div>
+                    <div class="card-content">
+                        <p class="card-dept">Computer Science</p>
+                        <h3>BSc (Hons) in Computer Science</h3>
+                        <p>Build expertise in programming, algorithms, databases, and software engineering. The foundation of modern technology careers.</p>
+                        <div class="card-details">
+                            <span><i class="fa-solid fa-users"></i> 50 seats</span>
+                            <span><i class="fa-solid fa-star" style="color:#ffd54f"></i> 4.8</span>
+                            <span><i class="fa-solid fa-laptop"></i> On-campus</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-price">
+                                <span class="price-label">From</span>
+                                <span class="price-amount">LKR 450,000 <span class="price-period">/ yr</span></span>
+                            </div>
+                            <a href="STDregister.html" class="enroll-btn">Apply Now</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARD 2 -->
+                <div class="course-card animate-in" data-cat="med" data-level="undergraduate" data-fee="mid">
+                    <div class="card-thumb">
+                        <img src="https://physiciansallianceofconnecticut.com/wp-content/uploads/2024/12/AdobeStock_174687350-scaled.jpeg" alt="Medical">
+                        <div class="card-thumb-overlay"></div>
+                        <span class="card-level level-undergraduate">Undergraduate</span>
+                        <button class="card-wishlist" onclick="toggleWishlist(this)"><i class="fa-regular fa-heart"></i></button>
+                        <span class="card-duration"><i class="fa-regular fa-clock"></i> 4 Years</span>
+                    </div>
+                    <div class="card-content">
+                        <p class="card-dept">Medical Science</p>
+                        <h3>BSc in Medical Science & Healthcare</h3>
+                        <p>Explore human biology, disease mechanisms, and clinical practice. Ideal for careers in medicine, nursing, or healthcare research.</p>
+                        <div class="card-details">
+                            <span><i class="fa-solid fa-users"></i> 40 seats</span>
+                            <span><i class="fa-solid fa-star" style="color:#ffd54f"></i> 4.7</span>
+                            <span><i class="fa-solid fa-flask"></i> Lab-based</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-price">
+                                <span class="price-label">From</span>
+                                <span class="price-amount">LKR 450,000 <span class="price-period">/ yr</span></span>
+                            </div>
+                            <a href="STDregister.html" class="enroll-btn">Apply Now</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARD 3 -->
+                <div class="course-card animate-in" data-cat="nano" data-level="undergraduate" data-fee="mid">
+                    <div class="card-thumb">
+                        <img src="https://micronanoeducation.org/wp-content/uploads/2021/02/NREL-Scientist-Using-Nanotechnology-MBE-System-_MNT-EC-1.jpg" alt="Nano">
+                        <div class="card-thumb-overlay"></div>
+                        <span class="card-level level-undergraduate">Undergraduate</span>
+                        <button class="card-wishlist" onclick="toggleWishlist(this)"><i class="fa-regular fa-heart"></i></button>
+                        <span class="card-duration"><i class="fa-regular fa-clock"></i> 4 Years</span>
+                    </div>
+                    <div class="card-content">
+                        <p class="card-dept">Nanotechnology</p>
+                        <h3>BSc (Hons) in Nanotechnology & Engineering</h3>
+                        <p>Manipulate matter at the atomic scale. From nano-electronics to nano-medicine — be at the forefront of materials science.</p>
+                        <div class="card-details">
+                            <span><i class="fa-solid fa-users"></i> 25 seats</span>
+                            <span><i class="fa-solid fa-star" style="color:#ffd54f"></i> 4.6</span>
+                            <span><i class="fa-solid fa-microscope"></i> Research</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-price">
+                                <span class="price-label">From</span>
+                                <span class="price-amount">LKR 450,000 <span class="price-period">/ yr</span></span>
+                            </div>
+                            <a href="STDregister.html" class="enroll-btn">Apply Now</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARD 4 -->
+                <div class="course-card animate-in" data-cat="cs" data-level="postgraduate" data-fee="high">
+                    <div class="card-thumb">
+                        <img src="https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?w=600" alt="MSc CS">
+                        <div class="card-thumb-overlay"></div>
+                        <span class="card-level level-postgraduate">Postgraduate</span>
+                        <button class="card-wishlist" onclick="toggleWishlist(this)"><i class="fa-regular fa-heart"></i></button>
+                        <span class="card-duration"><i class="fa-regular fa-clock"></i> 2 Years</span>
+                    </div>
+                    <div class="card-content">
+                        <p class="card-dept">Computer Science</p>
+                        <h3>MSc in Software Engineering & Architecture</h3>
+                        <p>Advanced study in enterprise software design, cloud computing, DevOps, and system architecture for senior tech roles.</p>
+                        <div class="card-details">
+                            <span><i class="fa-solid fa-users"></i> 30 seats</span>
+                            <span><i class="fa-solid fa-star" style="color:#ffd54f"></i> 4.8</span>
+                            <span><i class="fa-solid fa-cloud"></i> Hybrid</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-price">
+                                <span class="price-label">From</span>
+                                <span class="price-amount">LKR 600,000 <span class="price-period">/ yr</span></span>
+                            </div>
+                            <a href="STDregister.html" class="enroll-btn">Apply Now</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARD 5 -->
+                <div class="course-card animate-in" data-cat="business" data-level="undergraduate" data-fee="mid">
+                    <div class="card-thumb">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600" alt="Business">
+                        <div class="card-thumb-overlay"></div>
+                        <span class="card-level level-undergraduate">Undergraduate</span>
+                        <button class="card-wishlist" onclick="toggleWishlist(this)"><i class="fa-regular fa-heart"></i></button>
+                        <span class="card-duration"><i class="fa-regular fa-clock"></i> 3 Years</span>
+                    </div>
+                    <div class="card-content">
+                        <p class="card-dept">Business & Management</p>
+                        <h3>BBA in International Business Management</h3>
+                        <p>Develop leadership, strategic management, and global business skills for careers in multinational companies and entrepreneurship.</p>
+                        <div class="card-details">
+                            <span><i class="fa-solid fa-users"></i> 60 seats</span>
+                            <span><i class="fa-solid fa-star" style="color:#ffd54f"></i> 4.5</span>
+                            <span><i class="fa-solid fa-globe"></i> On-campus</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-price">
+                                <span class="price-label">From</span>
+                                <span class="price-amount">LKR 450,000 <span class="price-period">/ yr</span></span>
+                            </div>
+                            <a href="STDregister.html" class="enroll-btn">Apply Now</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARD 6 -->
+                <div class="course-card animate-in" data-cat="med" data-level="postgraduate" data-fee="high">
+                    <div class="card-thumb">
+                        <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=600" alt="MSc Medical">
+                        <div class="card-thumb-overlay"></div>
+                        <span class="card-level level-postgraduate">Postgraduate</span>
+                        <button class="card-wishlist" onclick="toggleWishlist(this)"><i class="fa-regular fa-heart"></i></button>
+                        <span class="card-duration"><i class="fa-regular fa-clock"></i> 2 Years</span>
+                    </div>
+                    <div class="card-content">
+                        <p class="card-dept">Medical Science</p>
+                        <h3>MSc in Clinical Research & Drug Development</h3>
+                        <p>Specialize in clinical trials methodology, pharmaceutical sciences, and regulatory affairs. Ideal for aspiring researchers.</p>
+                        <div class="card-details">
+                            <span><i class="fa-solid fa-users"></i> 20 seats</span>
+                            <span><i class="fa-solid fa-star" style="color:#ffd54f"></i> 4.9</span>
+                            <span><i class="fa-solid fa-flask"></i> Research</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-price">
+                                <span class="price-label">From</span>
+                                <span class="price-amount">LKR 600,000 <span class="price-period">/ yr</span></span>
+                            </div>
+                            <a href="STDregister.html" class="enroll-btn">Apply Now</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARD 7 -->
+                <div class="course-card animate-in" data-cat="lang" data-level="professional" data-fee="low">
+                    <div class="card-thumb">
+                        <img src="https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=600" alt="Languages">
+                        <div class="card-thumb-overlay"></div>
+                        <span class="card-level level-professional">Professional</span>
+                        <button class="card-wishlist" onclick="toggleWishlist(this)"><i class="fa-regular fa-heart"></i></button>
+                        <span class="card-duration"><i class="fa-regular fa-clock"></i> 6 Months</span>
+                    </div>
+                    <div class="card-content">
+                        <p class="card-dept">Language Studies</p>
+                        <h3>Professional Certificate in English for Business</h3>
+                        <p>Enhance your English communication, writing, and presentation skills for the professional world. Flexible scheduling available.</p>
+                        <div class="card-details">
+                            <span><i class="fa-solid fa-users"></i> 80 seats</span>
+                            <span><i class="fa-solid fa-star" style="color:#ffd54f"></i> 4.6</span>
+                            <span><i class="fa-solid fa-wifi"></i> Online</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-price">
+                                <span class="price-label">From</span>
+                                <span class="price-amount">LKR 150,000 <span class="price-period">/ course</span></span>
+                            </div>
+                            <a href="STDregister.html" class="enroll-btn">Apply Now</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARD 8 -->
+                <div class="course-card animate-in" data-cat="ai" data-level="professional" data-fee="low">
+                    <div class="card-thumb">
+                        <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=600" alt="AI Certificate">
+                        <div class="card-thumb-overlay"></div>
+                        <span class="card-level level-professional">Professional</span>
+                        <button class="card-wishlist" onclick="toggleWishlist(this)"><i class="fa-regular fa-heart"></i></button>
+                        <span class="card-duration"><i class="fa-regular fa-clock"></i> 3 Months</span>
+                    </div>
+                    <div class="card-content">
+                        <p class="card-dept">AI & Machine Learning</p>
+                        <h3>Certificate in Data Science & Python Programming</h3>
+                        <p>A fast-track professional course covering Python, data analysis, visualization, and introductory machine learning concepts.</p>
+                        <div class="card-details">
+                            <span><i class="fa-solid fa-users"></i> 100 seats</span>
+                            <span><i class="fa-solid fa-star" style="color:#ffd54f"></i> 4.7</span>
+                            <span><i class="fa-solid fa-wifi"></i> Online</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-price">
+                                <span class="price-label">From</span>
+                                <span class="price-amount">LKR 150,000 <span class="price-period">/ course</span></span>
+                            </div>
+                            <a href="STDregister.html" class="enroll-btn">Apply Now</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARD 9 -->
+                <div class="course-card animate-in" data-cat="nano" data-level="postgraduate" data-fee="high">
+                    <div class="card-thumb">
+                        <img src="https://images.unsplash.com/photo-1581093450021-4a7360e9a6b5?w=600" alt="PhD Nano">
+                        <div class="card-thumb-overlay"></div>
+                        <span class="card-level level-postgraduate">Postgraduate</span>
+                        <button class="card-wishlist" onclick="toggleWishlist(this)"><i class="fa-regular fa-heart"></i></button>
+                        <span class="card-duration"><i class="fa-regular fa-clock"></i> 3 Years</span>
+                    </div>
+                    <div class="card-content">
+                        <p class="card-dept">Nanotechnology</p>
+                        <h3>PhD in Advanced Nanomaterials & Applications</h3>
+                        <p>Conduct cutting-edge research in nanomaterials, nano-photonics, and nano-electronics supervised by world-class faculty.</p>
+                        <div class="card-details">
+                            <span><i class="fa-solid fa-users"></i> 10 seats</span>
+                            <span><i class="fa-solid fa-star" style="color:#ffd54f"></i> 5.0</span>
+                            <span><i class="fa-solid fa-microscope"></i> Research</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-price">
+                                <span class="price-label">From</span>
+                                <span class="price-amount">LKR 600,000 <span class="price-period">/ yr</span></span>
+                            </div>
+                            <a href="STDregister.html" class="enroll-btn">Apply Now</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- NO RESULTS -->
+                <div class="no-results" id="noResults">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <h3>No courses found</h3>
+                    <p>Try adjusting your search or filters to find what you're looking for.</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- WHY KAUFA -->
+    <section class="why-strip">
+        <h2>Why Choose KAUFA?</h2>
+        <p>We're committed to delivering education that matters — for your career and the world.</p>
+        <div class="why-grid">
+            <div class="why-card">
+                <div class="why-icon"><i class="fa-solid fa-chalkboard-user"></i></div>
+                <h4>Expert Faculty</h4>
+                <p>Learn from industry professionals and published researchers with real-world experience.</p>
+            </div>
+            <div class="why-card">
+                <div class="why-icon"><i class="fa-solid fa-flask"></i></div>
+                <h4>Modern Labs</h4>
+                <p>State-of-the-art research facilities and computing labs at your fingertips.</p>
+            </div>
+            <div class="why-card">
+                <div class="why-icon"><i class="fa-solid fa-globe"></i></div>
+                <h4>Global Network</h4>
+                <p>Exchange programs and partnerships with universities across Asia and Europe.</p>
+            </div>
+            <div class="why-card">
+                <div class="why-icon"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+                <h4>Scholarships</h4>
+                <p>Merit-based scholarships with up to 50% tuition fee waiver for outstanding students.</p>
+            </div>
+            <div class="why-card">
+                <div class="why-icon"><i class="fa-solid fa-briefcase"></i></div>
+                <h4>Career Support</h4>
+                <p>Dedicated career counseling, internship placements, and alumni network access.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+        <h2>Ready to Start Your Journey?</h2>
+        <p>Join thousands of students who chose KAUFA University to shape their future.</p>
+        <div class="cta-btns">
+            <a href="STDregister.html" class="cta-primary"><i class="fa-solid fa-graduation-cap"></i>&nbsp; Apply Now</a>
+            <a href="main.html#contact-section" class="cta-secondary"><i class="fa-regular fa-envelope"></i>&nbsp; Contact Admissions</a>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <section id="contact-section">
+        <div class="contact1">
+            <img src="2.png" alt="logo">
+            <h1>Follow Us</h1><br>
+            <a href=""><i class="fa-brands fa-facebook-f"></i></a>
+            <a href=""><i class="fa-brands fa-twitter"></i></a>
+            <a href=""><i class="fa-brands fa-linkedin-in"></i></a>
+        </div>
+        <div class="contact2">
+            <h1>Explore</h1><br>
+            <ul>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="main.html#about">About</a></li>
+                <li><a href="#contact-section">Contact</a></li>
+                <li><a href="login.html">Team</a></li>
+            </ul>
+        </div>
+        <div class="contact3">
+            <h1>Links</h1><br>
+            <ul>
+                <li><a href="main.html#about">About</a></li>
+                <li><a href="#contact-section">Contact</a></li>
+                <li><a href="course.html">Course Details</a></li>
+                <li><a href="blog.html">Blog</a></li>
+            </ul>
+        </div>
+        <div class="contact4">
+            <h1>Sign up for our newsletter</h1><br>
+            <p class="content">Receive weekly newsletter with educational materials, popular books and much more!</p>
+            <br>
+            <form class="input-box">
+                <input type="text" placeholder="Email">
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+
+    <script>
+        let currentCat = 'all';
+
+        function setFilter(cat, el) {
+            currentCat = cat;
+            document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+            el.classList.add('active');
+            applyFilters();
+        }
+
+        function applyFilters() {
+            const query = document.getElementById('courseSearch').value.toLowerCase();
+            const feeFilter = document.querySelector('input[name="fee"]:checked').value;
+            const cards = document.querySelectorAll('.course-card');
+            let visible = 0;
+
+            cards.forEach(card => {
+                const catMatch = currentCat === 'all' || card.dataset.cat === currentCat;
+                const feeMatch = feeFilter === 'all' || card.dataset.fee === feeFilter;
+                const textMatch = card.innerText.toLowerCase().includes(query);
+                if (catMatch && feeMatch && textMatch) {
+                    card.style.display = 'flex';
+                    card.style.flexDirection = 'column';
+                    visible++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            // Featured card visibility
+            const featured = document.querySelector('.featured-row');
+            if (featured) {
+                const catMatch = currentCat === 'all' || featured.dataset.cat === currentCat;
+                featured.style.display = catMatch ? 'grid' : 'none';
+            }
+
+            document.getElementById('noResults').style.display = visible === 0 ? 'block' : 'none';
+            document.getElementById('resultsCount').textContent = `Showing ${visible} course${visible !== 1 ? 's' : ''}`;
+        }
+
+        function updateDuration(el) {
+            const labels = ['1 Year', '2 Years', '3 Years', '4 Years'];
+            document.getElementById('durationVal').textContent = 'Up to ' + labels[el.value - 1];
+        }
+
+        function clearFilters() {
+            currentCat = 'all';
+            document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+            document.querySelector('.filter-chip').classList.add('active');
+            document.getElementById('courseSearch').value = '';
+            document.querySelector('input[name="fee"]').checked = true;
+            document.querySelectorAll('.level-option input').forEach(cb => cb.checked = true);
+            applyFilters();
+        }
+
+        function toggleWishlist(btn) {
+            btn.classList.toggle('saved');
+            const icon = btn.querySelector('i');
+            icon.classList.toggle('fa-regular');
+            icon.classList.toggle('fa-solid');
+        }
+
+        // Scroll-triggered animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((e, i) => {
+                if (e.isIntersecting) {
+                    e.target.style.opacity = '1';
+                    e.target.style.transform = 'translateY(0)';
+                    observer.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.course-card, .why-card').forEach((el, i) => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(32px)';
+            el.style.transition = `opacity 0.5s ease ${i * 0.07}s, transform 0.5s ease ${i * 0.07}s`;
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

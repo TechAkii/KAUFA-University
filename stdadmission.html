@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Admission & Payment - KAUFA University</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="icon" type="image/png" href="2.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --green:       #2e7d32;
+            --green-dark:  #1b5e20;
+            --green-light: #4caf50;
+            --green-pale:  #e8f5e9;
+            --green-mid:   #a5d6a7;
+            --gold:        #c8942a;
+            --gold-light:  #ffd87a;
+            --dark:        #0a140a;
+            --text:        #1a271a;
+            --muted:       #5c6e5c;
+            --border:      #d8e8d8;
+            --bg:          #f5f9f5;
+            --card:        #ffffff;
+            --error:       #b71c1c;
+            --orange:      #e65100;
+            --orange-pale: #fff3e0;
+        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Outfit', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+        /* ── HEADER ── */
+        header {
+            background: #fff; display: flex; justify-content: space-between;
+            align-items: center; padding: 10px 40px;
+            border-bottom: 1px solid var(--border);
+            position: sticky; top: 0; z-index: 200;
+            box-shadow: 0 2px 8px rgba(0,0,0,.04);
+        }
+        .mail-location a { color: var(--muted); text-decoration: none; font-size: .83rem; margin-right: 14px; }
+        .mail-location a:hover { color: var(--green); }
+        .header-buttons { display: flex; gap: 12px; align-items: center; }
+        .login-btn a { text-decoration: none; color: var(--green); font-weight: 600; font-size: .9rem; }
+        .contact-btn { background: var(--green); color: #fff; border: none; padding: 8px 20px; border-radius: 6px; cursor: pointer; font-size: .88rem; font-family: 'Outfit', sans-serif; transition: background .2s; }
+        .contact-btn:hover { background: var(--green-dark); }
+
+        /* ── SHELL ── */
+        .shell { display: grid; grid-template-columns: 290px 1fr; min-height: calc(100vh - 57px); }
+
+        /* ── SIDEBAR ── */
+        .sidebar {
+            background: linear-gradient(175deg, var(--dark) 0%, #0e2a0e 45%, var(--green-dark) 100%);
+            color: #fff; padding: 40px 28px;
+            position: sticky; top: 57px;
+            height: calc(100vh - 57px); overflow-y: auto;
+            display: flex; flex-direction: column;
+        }
+        .sidebar::-webkit-scrollbar { width: 3px; }
+        .sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,.15); border-radius: 4px; }
+        .sidebar::before {
+            content: ''; position: absolute; inset: 0; pointer-events: none;
+            background:
+                radial-gradient(ellipse 80% 40% at 20% 10%, rgba(76,175,80,.12) 0%, transparent 60%),
+                url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='20' cy='20' r='1' fill='%23fff' fill-opacity='0.04'/%3E%3C/svg%3E");
+        }
+        .sb-logo { display: flex; align-items: center; gap: 11px; margin-bottom: 32px; position: relative; }
+        .sb-logo img { height: 38px; filter: brightness(0) invert(1); }
+        .sb-logo strong { font-size: .97rem; display: block; }
+        .sb-logo small { font-size: .66rem; opacity: .5; letter-spacing: .8px; }
+        .sb-headline { font-family: 'Cormorant Garamond', serif; font-size: 1.75rem; line-height: 1.2; margin-bottom: 9px; position: relative; }
+        .sb-headline em { font-style: normal; color: var(--gold-light); }
+        .sb-desc { font-size: .79rem; opacity: .65; line-height: 1.65; margin-bottom: 32px; position: relative; }
+
+        /* Step tracker */
+        .tracker { display: flex; flex-direction: column; position: relative; flex: 1; }
+        .tracker::before { content: ''; position: absolute; left: 16px; top: 18px; bottom: 18px; width: 2px; background: rgba(255,255,255,.1); }
+        .trk-item { display: flex; align-items: flex-start; gap: 13px; padding: 10px 0; cursor: pointer; transition: opacity .2s; }
+        .trk-item.inactive { opacity: .32; }
+        .trk-dot {
+            width: 34px; height: 34px; border-radius: 50%;
+            background: rgba(255,255,255,.1); border: 2px solid rgba(255,255,255,.18);
+            display: flex; align-items: center; justify-content: center;
+            font-size: .76rem; font-weight: 700; flex-shrink: 0; z-index: 1; transition: all .3s;
+        }
+        .trk-item.active  .trk-dot { background: var(--gold-light); border-color: var(--gold-light); color: var(--dark); box-shadow: 0 0 0 4px rgba(255,216,122,.2); }
+        .trk-item.done    .trk-dot { background: rgba(255,255,255,.9); border-color: #fff; color: var(--green); }
+        .trk-text strong { display: block; font-size: .82rem; font-weight: 600; }
+        .trk-text span   { font-size: .7rem; opacity: .6; }
+
+        .sb-footer { margin-top: auto; padding-top: 22px; border-top: 1px solid rgba(255,255,255,.1); position: relative; }
+        .sb-help { font-size: .75rem; opacity: .62; line-height: 1.7; }
+        .sb-help strong { color: var(--gold-light); }
+        .sb-back { display: inline-flex; align-items: center; gap: 7px; color: rgba(255,255,255,.5); text-decoration: none; font-size: .75rem; margin-top: 11px; transition: color .2s; }
+        .sb-back:hover { color: #fff; }
+
+        /* ── RIGHT PANEL ── */
+        .rpanel { padding: 44px 56px; overflow-y: auto; }
+
+        /* Progress dots */
+        .pdots { display: flex; align-items: center; gap: 6px; margin-bottom: 32px; }
+        .pd { width: 7px; height: 7px; border-radius: 50%; background: var(--border); transition: all .3s; }
+        .pd.done   { background: var(--green-mid); }
+        .pd.active { background: var(--green); width: 22px; border-radius: 4px; }
+        .pd.pay.active { background: var(--gold); }
+        .pd-lbl { margin-left: 8px; font-size: .73rem; color: var(--muted); font-weight: 500; }
+
+        /* Form views */
+        .fview { display: none; animation: fsIn .36s ease; }
+        .fview.active { display: block; }
+        @keyframes fsIn { from { opacity: 0; transform: translateX(16px); } to { opacity: 1; transform: translateX(0); } }
+
+        /* Section header */
+        .sh { margin-bottom: 30px; }
+        .sh-badge { display: inline-flex; align-items: center; gap: 7px; background: var(--green-pale); color: var(--green); font-size: .7rem; font-weight: 700; padding: 4px 13px; border-radius: 50px; letter-spacing: .4px; margin-bottom: 11px; }
+        .sh-badge.pay { background: var(--orange-pale); color: var(--orange); }
+        .sh h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.9rem; color: var(--dark); margin-bottom: 5px; }
+        .sh p  { color: var(--muted); font-size: .86rem; line-height: 1.6; }
+
+        /* Grid rows */
+        .fr2 { display: grid; grid-template-columns: 1fr 1fr;     gap: 16px; margin-bottom: 16px; }
+        .fr3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+        .fr1 { display: grid; grid-template-columns: 1fr;         gap: 16px; margin-bottom: 16px; }
+
+        /* Form group */
+        .fg { display: flex; flex-direction: column; gap: 5px; }
+        .fg label { font-size: .75rem; font-weight: 600; color: var(--text); letter-spacing: .3px; }
+        .fg label .req { color: var(--error); margin-left: 2px; }
+        .fg input, .fg select, .fg textarea {
+            padding: 11px 14px; border: 1.5px solid var(--border); border-radius: 9px;
+            font-size: .88rem; font-family: 'Outfit', sans-serif; color: var(--text);
+            background: #fff; outline: none; width: 100%; transition: border-color .2s, box-shadow .2s;
+        }
+        .fg input:focus, .fg select:focus, .fg textarea:focus { border-color: var(--green-light); box-shadow: 0 0 0 3px rgba(76,175,80,.1); }
+        .fg textarea { resize: vertical; min-height: 88px; }
+        .fg select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='11' viewBox='0 0 12 12'%3E%3Cpath fill='%235c6e5c' d='M6 8L1 3h10z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; }
+        .hint { font-size: .7rem; color: var(--muted); }
+
+        /* Divider */
+        .divider { display: flex; align-items: center; gap: 11px; margin: 22px 0; }
+        .divider hr { flex: 1; border: none; border-top: 1px solid var(--border); }
+        .divider span { font-size: .66rem; font-weight: 700; color: var(--muted); letter-spacing: 1.2px; text-transform: uppercase; white-space: nowrap; }
+
+        /* Radio pills */
+        .rpills { display: flex; gap: 9px; flex-wrap: wrap; }
+        .rpill { display: flex; align-items: center; gap: 7px; padding: 9px 16px; border: 1.5px solid var(--border); border-radius: 8px; cursor: pointer; font-size: .83rem; font-weight: 500; transition: all .2s; }
+        .rpill:hover { border-color: var(--green-mid); }
+        .rpill.sel { border-color: var(--green); background: var(--green-pale); color: var(--green); }
+        .rpill input { accent-color: var(--green); }
+
+        /* Course cards */
+        .cpick-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 18px; }
+        .cpc { border: 2px solid var(--border); border-radius: 13px; padding: 15px; cursor: pointer; transition: all .22s; position: relative; }
+        .cpc:hover { border-color: var(--green-mid); }
+        .cpc.sel { border-color: var(--green); background: var(--green-pale); }
+        .cpc input { position: absolute; top: 12px; right: 12px; accent-color: var(--green); width: 15px; height: 15px; }
+        .cpc-ic { font-size: 1.4rem; margin-bottom: 7px; }
+        .cpc h4 { font-size: .85rem; font-weight: 700; color: var(--dark); margin-bottom: 3px; }
+        .cpc p  { font-size: .73rem; color: var(--muted); line-height: 1.4; }
+        .cpc .dur { font-size: .68rem; font-weight: 700; color: var(--green); margin-top: 6px; }
+
+        /* Check options */
+        .chk-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        .chkopt { display: flex; align-items: center; gap: 8px; padding: 8px 12px; border: 1.5px solid var(--border); border-radius: 8px; cursor: pointer; font-size: .81rem; transition: all .2s; }
+        .chkopt:hover { border-color: var(--green-mid); }
+        .chkopt input { accent-color: var(--green); }
+
+        /* Upload */
+        .upzone { border: 2px dashed var(--border); border-radius: 12px; padding: 24px; text-align: center; cursor: pointer; transition: all .22s; background: #fafcfa; }
+        .upzone:hover { border-color: var(--green-light); background: var(--green-pale); }
+        .upzone i { font-size: 1.6rem; color: var(--green-mid); display: block; margin-bottom: 9px; }
+        .upzone h4 { font-size: .85rem; font-weight: 600; margin-bottom: 3px; }
+        .upzone p  { font-size: .73rem; color: var(--muted); }
+        .upzone input { display: none; }
+        .upbtn { display: inline-block; margin-top: 11px; background: var(--green); color: #fff; padding: 7px 18px; border-radius: 7px; font-size: .77rem; font-weight: 600; cursor: pointer; transition: background .2s; }
+        .upbtn:hover { background: var(--green-dark); }
+        .upfile { display: none; align-items: center; gap: 10px; background: var(--green-pale); border: 1.5px solid var(--green-mid); border-radius: 9px; padding: 10px 14px; margin-top: 9px; }
+        .upfile i { color: var(--green); }
+        .upfile span { flex: 1; font-size: .82rem; font-weight: 500; }
+        .upfile button { background: none; border: none; color: var(--muted); cursor: pointer; }
+
+        /* Declaration */
+        .decl { background: #f0f7f0; border: 1.5px solid var(--green-mid); border-radius: 13px; padding: 20px; margin-bottom: 20px; }
+        .decl h4 { font-size: .86rem; font-weight: 700; color: var(--dark); margin-bottom: 9px; }
+        .decl p  { font-size: .79rem; color: var(--muted); line-height: 1.68; }
+        .sig-wrap { margin-top: 16px; border: 1.5px dashed var(--border); border-radius: 8px; padding: 16px; background: #fff; text-align: center; }
+        .sig-wrap p { font-size: .73rem; color: var(--muted); margin-bottom: 9px; }
+        .sig-inp { font-family: 'Cormorant Garamond', serif !important; font-size: 1.25rem !important; text-align: center; border: none !important; border-bottom: 2px solid var(--border) !important; border-radius: 0 !important; padding: 5px !important; width: 100%; }
+        .sig-inp:focus { border-bottom-color: var(--green) !important; box-shadow: none !important; outline: none; }
+
+        /* Nav */
+        .fnav { display: flex; justify-content: space-between; align-items: center; margin-top: 32px; padding-top: 22px; border-top: 1px solid var(--border); }
+        .btn-back { display: flex; align-items: center; gap: 7px; background: none; border: 1.5px solid var(--border); padding: 10px 20px; border-radius: 8px; font-size: .86rem; font-weight: 600; color: var(--muted); cursor: pointer; font-family: 'Outfit', sans-serif; transition: all .2s; }
+        .btn-back:hover { border-color: var(--green); color: var(--green); }
+        .btn-fwd  { display: flex; align-items: center; gap: 8px; background: var(--green); color: #fff; border: none; padding: 11px 28px; border-radius: 8px; font-size: .9rem; font-weight: 700; cursor: pointer; font-family: 'Outfit', sans-serif; transition: all .22s; box-shadow: 0 4px 14px rgba(46,125,50,.22); }
+        .btn-fwd:hover { background: var(--green-dark); transform: translateX(3px); }
+        .btn-gold { background: linear-gradient(135deg, var(--gold), var(--gold-light)); color: var(--dark); box-shadow: 0 4px 14px rgba(200,148,42,.28); }
+        .btn-gold:hover { filter: brightness(1.06); transform: none; }
+
+        /* ═════════════════════════════
+           PAYMENT STEP
+        ═════════════════════════════ */
+        .pay-layout { display: grid; grid-template-columns: 1fr 290px; gap: 26px; align-items: start; }
+
+        /* Fee summary */
+        .fee-box { background: var(--bg); border-radius: 12px; padding: 16px; margin-bottom: 22px; }
+        .fee-ln { display: flex; justify-content: space-between; padding: 7px 0; font-size: .86rem; }
+        .fee-ln .fl { color: var(--muted); }
+        .fee-ln .fv { font-weight: 600; }
+        .fee-ln.tot { border-top: 1px solid var(--border); margin-top: 5px; padding-top: 12px; }
+        .fee-ln.tot .fl { font-weight: 700; color: var(--dark); font-size: .91rem; }
+        .fee-ln.tot .fv { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; color: var(--green); }
+
+        /* Installment */
+        .inst-tog { display: flex; align-items: center; gap: 11px; padding: 12px 14px; background: var(--bg); border: 1.5px solid var(--border); border-radius: 10px; cursor: pointer; transition: border-color .2s; margin-bottom: 16px; }
+        .inst-tog:hover { border-color: var(--green-mid); }
+        .tog-sw { width: 38px; height: 21px; background: var(--border); border-radius: 50px; position: relative; transition: background .2s; flex-shrink: 0; }
+        .tog-sw::after { content: ''; position: absolute; width: 15px; height: 15px; background: #fff; border-radius: 50%; top: 3px; left: 3px; transition: transform .2s; box-shadow: 0 1px 3px rgba(0,0,0,.2); }
+        .tog-sw.on { background: var(--green); }
+        .tog-sw.on::after { transform: translateX(17px); }
+        .tog-txt h4 { font-size: .84rem; font-weight: 700; color: var(--dark); }
+        .tog-txt p  { font-size: .72rem; color: var(--muted); }
+        .inst-plans { display: none; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+        .inst-plans.show { display: flex; }
+        .iplan { border: 1.5px solid var(--border); border-radius: 10px; padding: 12px 14px; cursor: pointer; display: flex; align-items: center; gap: 11px; transition: all .2s; }
+        .iplan:hover { border-color: var(--green-mid); }
+        .iplan.sel { border-color: var(--green); background: var(--green-pale); }
+        .iplan input { accent-color: var(--green); flex-shrink: 0; }
+        .iplan-info h4 { font-size: .83rem; font-weight: 700; color: var(--dark); }
+        .iplan-info p  { font-size: .73rem; color: var(--muted); margin-top: 2px; }
+        .iplan .ibadge { margin-left: auto; font-size: .66rem; font-weight: 700; padding: 3px 8px; border-radius: 50px; white-space: nowrap; }
+        .ib-free { background: var(--green-pale); color: var(--green); }
+        .ib-fee  { background: var(--orange-pale); color: var(--orange); }
+
+        /* Method tabs */
+        .mtabs { display: flex; gap: 8px; margin-bottom: 20px; }
+        .mtab { flex: 1; padding: 12px 7px; border: 2px solid var(--border); border-radius: 10px; text-align: center; cursor: pointer; transition: all .2s; background: #fff; }
+        .mtab:hover { border-color: var(--green-mid); }
+        .mtab.active { border-color: var(--green); background: var(--green-pale); }
+        .mtab i { font-size: 1.15rem; color: var(--muted); display: block; margin-bottom: 4px; }
+        .mtab.active i { color: var(--green); }
+        .mtab span { font-size: .73rem; font-weight: 600; }
+
+        /* Card visual */
+        .card-vis {
+            width: 100%; height: 178px; border-radius: 15px;
+            background: linear-gradient(135deg, #0a1a0a, #173317, #1b5e20);
+            position: relative; overflow: hidden; padding: 22px 24px;
+            color: #fff; margin-bottom: 20px;
+            box-shadow: 0 10px 32px rgba(0,0,0,.22);
+        }
+        .card-vis::before { content: ''; position: absolute; top: -28px; right: -28px; width: 140px; height: 140px; background: rgba(255,255,255,.04); border-radius: 50%; }
+        .card-vis::after  { content: ''; position: absolute; bottom: -45px; left: -18px; width: 160px; height: 160px; background: rgba(76,175,80,.08); border-radius: 50%; }
+        .cv-chip { width: 36px; height: 26px; background: linear-gradient(135deg,#c8942a,#ffd87a); border-radius: 4px; margin-bottom: 16px; position: relative; z-index: 1; }
+        .cv-num  { font-family: 'Cormorant Garamond', serif; font-size: 1rem; letter-spacing: 3px; margin-bottom: 14px; position: relative; z-index: 1; opacity: .9; }
+        .cv-bot  { display: flex; justify-content: space-between; position: relative; z-index: 1; }
+        .cv-lbl  { font-size: .56rem; opacity: .45; letter-spacing: 1px; text-transform: uppercase; }
+        .cv-val  { font-size: .8rem; font-weight: 600; margin-top: 2px; }
+        .cv-brand { position: absolute; bottom: 16px; right: 18px; z-index: 1; font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-style: italic; opacity: .88; }
+
+        /* Input icon wrapper */
+        .ii-wrap { position: relative; }
+        .ii-wrap i { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: .82rem; }
+        .ii-wrap input { padding-right: 36px; }
+
+        /* Bank info */
+        .bank-box { background: var(--green-pale); border: 1.5px solid var(--green-mid); border-radius: 12px; padding: 18px; margin-bottom: 14px; }
+        .bank-box h4 { font-size: .88rem; font-weight: 700; margin-bottom: 12px; color: var(--dark); }
+        .brow { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid rgba(165,214,167,.4); font-size: .84rem; }
+        .brow:last-child { border-bottom: none; }
+        .brow .bl { color: var(--muted); }
+        .brow .bv { font-weight: 700; }
+        .copybtn { background: none; border: 1px solid var(--border); color: var(--muted); padding: 2px 8px; border-radius: 5px; font-size: .66rem; cursor: pointer; font-family: 'Outfit', sans-serif; transition: all .2s; }
+        .copybtn:hover { border-color: var(--green); color: var(--green); }
+
+        /* Office steps */
+        .off-wrap { background: var(--bg); border-radius: 12px; padding: 20px; margin-bottom: 14px; }
+        .off-step { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 15px; }
+        .off-step:last-child { margin-bottom: 0; }
+        .off-num { width: 28px; height: 28px; border-radius: 50%; background: var(--green); color: #fff; display: flex; align-items: center; justify-content: center; font-size: .76rem; font-weight: 700; flex-shrink: 0; }
+        .off-step h4 { font-size: .84rem; font-weight: 700; color: var(--dark); margin-bottom: 2px; }
+        .off-step p  { font-size: .77rem; color: var(--muted); line-height: 1.5; }
+
+        /* Pay button */
+        .pay-btn { width: 100%; padding: 14px; background: linear-gradient(135deg, var(--green-dark), var(--green)); color: #fff; border: none; border-radius: 10px; font-size: .94rem; font-weight: 700; cursor: pointer; font-family: 'Outfit', sans-serif; transition: all .28s; box-shadow: 0 5px 16px rgba(46,125,50,.26); display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 6px; }
+        .pay-btn:hover { transform: translateY(-2px); box-shadow: 0 9px 24px rgba(46,125,50,.36); }
+        .sec-note { display: flex; align-items: center; gap: 6px; justify-content: center; font-size: .71rem; color: var(--muted); margin-top: 11px; }
+        .sec-note i { color: var(--green); }
+
+        /* Order summary sidebar */
+        .ord-card { background: var(--dark); border-radius: 15px; overflow: hidden; }
+        .ord-head { background: rgba(255,255,255,.05); padding: 16px 18px; border-bottom: 1px solid rgba(255,255,255,.07); }
+        .ord-head h3 { font-family: 'Cormorant Garamond', serif; font-size: .97rem; color: #fff; }
+        .ord-head p  { font-size: .68rem; color: rgba(255,255,255,.38); margin-top: 2px; }
+        .ord-body { padding: 16px 18px; }
+        .ord-stu { display: flex; align-items: center; gap: 10px; padding-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,.07); margin-bottom: 12px; }
+        .ord-av  { width: 38px; height: 38px; border-radius: 50%; background: rgba(76,175,80,.18); display: flex; align-items: center; justify-content: center; color: var(--green-light); font-size: .95rem; flex-shrink: 0; }
+        .ord-stu h4 { font-size: .84rem; font-weight: 700; color: #fff; }
+        .ord-stu p  { font-size: .69rem; color: rgba(255,255,255,.4); }
+        .ord-ln { display: flex; justify-content: space-between; padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,.05); font-size: .79rem; }
+        .ord-ln:last-of-type { border-bottom: none; }
+        .ord-ln .ol { color: rgba(255,255,255,.45); }
+        .ord-ln .ov { color: #fff; font-weight: 600; }
+        .ord-tot { background: linear-gradient(135deg, var(--green-dark), var(--green)); border-radius: 9px; padding: 12px 14px; display: flex; justify-content: space-between; align-items: center; margin-top: 12px; }
+        .ord-tot .otl { font-size: .77rem; color: rgba(255,255,255,.75); }
+        .ord-tot .otv { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; color: #fff; font-weight: 700; }
+        .ord-badges { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+        .ob { display: flex; align-items: center; gap: 4px; font-size: .65rem; color: rgba(255,255,255,.4); background: rgba(255,255,255,.05); padding: 3px 8px; border-radius: 50px; }
+        .ob i { color: var(--green-light); font-size: .62rem; }
+
+        /* ── PROCESSING ── */
+        .proc-wrap { background: var(--card); border-radius: 18px; box-shadow: 0 4px 24px rgba(0,0,0,.07); }
+        .proc-inner { text-align: center; padding: 56px 40px; }
+        .proc-ring { width: 68px; height: 68px; border-radius: 50%; border: 4px solid var(--green-pale); border-top-color: var(--green); animation: spin .9s linear infinite; margin: 0 auto 22px; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .proc-inner h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.35rem; color: var(--dark); margin-bottom: 7px; }
+        .proc-inner p { color: var(--muted); font-size: .84rem; }
+        .proc-steps { display: flex; flex-direction: column; gap: 8px; margin-top: 22px; text-align: left; max-width: 250px; margin-left: auto; margin-right: auto; }
+        .pstep { display: flex; align-items: center; gap: 8px; font-size: .81rem; color: var(--muted); opacity: .3; transition: opacity .4s; }
+        .pstep.done { opacity: 1; color: var(--green); }
+        .pstep i { width: 15px; text-align: center; }
+
+        /* ── RECEIPT ── */
+        .receipt-wrap { display: none; }
+        .receipt-wrap.active { display: block; animation: fsIn .45s ease; }
+        .rec-hero { background: linear-gradient(135deg, var(--green-dark), var(--green)); border-radius: 17px; padding: 38px 32px; text-align: center; color: #fff; margin-bottom: 22px; position: relative; overflow: hidden; }
+        .rec-hero::before { content: ''; position: absolute; inset: 0; background: url("data:image/svg+xml,%3Csvg width='48' height='48' viewBox='0 0 48 48' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='24' cy='24' r='1' fill='%23fff' fill-opacity='0.05'/%3E%3C/svg%3E"); }
+        .rec-chk { width: 66px; height: 66px; background: rgba(255,255,255,.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; margin: 0 auto 15px; animation: popIn .5s cubic-bezier(.4,0,.2,1); position: relative; }
+        @keyframes popIn { from { transform: scale(.4); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .rec-hero h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.75rem; margin-bottom: 5px; position: relative; }
+        .rec-hero p  { opacity: .8; font-size: .86rem; position: relative; }
+        .rec-ref { display: inline-block; background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.28); padding: 6px 20px; border-radius: 50px; font-size: .85rem; font-weight: 700; letter-spacing: 2px; margin-top: 11px; position: relative; }
+        .rec-panel { background: var(--card); border-radius: 17px; box-shadow: 0 4px 24px rgba(0,0,0,.07); overflow: hidden; }
+        .rec-ph { padding: 20px 26px; border-bottom: 1px solid var(--border); }
+        .rec-ph h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; color: var(--dark); }
+        .rec-body { padding: 20px 26px; }
+        .rec-row { display: flex; justify-content: space-between; padding: 8px 0; font-size: .84rem; border-bottom: 1px dashed var(--border); }
+        .rec-row:last-child { border-bottom: none; }
+        .rec-row .rl { color: var(--muted); }
+        .rec-row .rv { font-weight: 600; color: var(--dark); }
+        .rec-tot { background: var(--green-pale); border-radius: 10px; padding: 13px 16px; display: flex; justify-content: space-between; align-items: center; margin: 13px 0 18px; }
+        .rec-tot .rtl { font-weight: 700; color: var(--dark); }
+        .rec-tot .rtv { font-family: 'Cormorant Garamond', serif; font-size: 1.35rem; color: var(--green); font-weight: 700; }
+        .rec-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+        .rbtn { flex: 1; min-width: 100px; padding: 10px 13px; border-radius: 8px; font-size: .81rem; font-weight: 700; cursor: pointer; font-family: 'Outfit', sans-serif; transition: all .2s; text-align: center; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 5px; border: none; }
+        .rbtn.pri { background: var(--green); color: #fff; }
+        .rbtn.pri:hover { background: var(--green-dark); color: #fff; }
+        .rbtn.sec { background: none; color: var(--green); border: 1.5px solid var(--green); }
+        .rbtn.sec:hover { background: var(--green-pale); }
+        .rbtn.out { background: none; color: var(--muted); border: 1.5px solid var(--border); }
+        .rbtn.out:hover { border-color: var(--green); color: var(--green); }
+
+        .info-pill { display: inline-flex; align-items: center; gap: 6px; background: #e3f2fd; color: #1565c0; padding: 6px 13px; border-radius: 50px; font-size: .75rem; font-weight: 500; margin-bottom: 16px; }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 1060px) { .pay-layout { grid-template-columns: 1fr; } .ord-card { display: none; } }
+        @media (max-width: 880px)  { .shell { grid-template-columns: 1fr; } .sidebar { position: relative; height: auto; padding: 24px 20px; } .tracker { flex-direction: row; overflow-x: auto; gap: 4px; } .tracker::before { display: none; } .trk-item { flex-direction: column; align-items: center; text-align: center; min-width: 68px; } .trk-text span { display: none; } .sb-footer { display: none; } .rpanel { padding: 26px 20px; } }
+        @media (max-width: 580px)  { header { flex-direction: column; gap: 8px; padding: 10px 16px; } .rpanel { padding: 20px 12px; } .fr2,.fr3 { grid-template-columns: 1fr; } .cpick-grid { grid-template-columns: 1fr; } .chk-grid { grid-template-columns: 1fr; } .mtabs { flex-wrap: wrap; } .rec-actions { flex-direction: column; } }
+    </style>
+</head>
+<body>
+
+<!-- ═══ HEADER ═══ -->
+<header>
+    <div class="mail-location">
+        <a href="mailto:info@kaufa.com"><i class="fa-regular fa-envelope"></i>&nbsp; info@kaufa.com</a>
+        <a href="#"><i class="fa-solid fa-location-dot"></i>&nbsp; Sirisewana, Bentota, Sri Lanka</a>
+    </div>
+    <div class="header-buttons">
+        <div class="login-btn"><a href="login.html"><i class="fa-regular fa-user"></i> Login</a></div>
+        <a href="main.html#contact-section"><button class="contact-btn">Contact Us</button></a>
+    </div>
+</header>
+
+<div class="shell">
+
+    <!-- ═══ SIDEBAR ═══ -->
+    <nav class="sidebar">
+        <div class="sb-logo">
+            <img src="1.png" alt="KAUFA">
+            <div>
+                <strong>KAUFA University</strong>
+                <small>Admissions Portal</small>
+            </div>
+        </div>
+        <h1 class="sb-headline">Your <em>Future</em><br>Starts Here</h1>
+        <p class="sb-desc">Complete all 6 steps — from application to fee payment — in one seamless flow.</p>
+
+        <div class="tracker">
+            <div class="trk-item active" data-step="1" onclick="jump(1)">
+                <div class="trk-dot" id="dot-1">1</div>
+                <div class="trk-text"><strong>Personal Info</strong><span>Your basic details</span></div>
+            </div>
+            <div class="trk-item inactive" data-step="2" onclick="jump(2)">
+                <div class="trk-dot" id="dot-2">2</div>
+                <div class="trk-text"><strong>Programme</strong><span>Choose your course</span></div>
+            </div>
+            <div class="trk-item inactive" data-step="3" onclick="jump(3)">
+                <div class="trk-dot" id="dot-3">3</div>
+                <div class="trk-text"><strong>Education</strong><span>Academic background</span></div>
+            </div>
+            <div class="trk-item inactive" data-step="4" onclick="jump(4)">
+                <div class="trk-dot" id="dot-4">4</div>
+                <div class="trk-text"><strong>Documents</strong><span>Upload required files</span></div>
+            </div>
+            <div class="trk-item inactive" data-step="5" onclick="jump(5)">
+                <div class="trk-dot" id="dot-5">5</div>
+                <div class="trk-text"><strong>Declaration</strong><span>Review & confirm</span></div>
+            </div>
+            <div class="trk-item inactive" data-step="6" onclick="jump(6)">
+                <div class="trk-dot" id="dot-6"><i class="fa-solid fa-credit-card" style="font-size:.65rem"></i></div>
+                <div class="trk-text"><strong>Payment</strong><span>Pay fees securely</span></div>
+            </div>
+        </div>
+
+        <div class="sb-footer">
+            <p class="sb-help">Need help?<br><strong>+94 34 227 0000</strong><br>admissions@kaufa.edu.lk<br>Mon–Fri · 8:30 AM – 4:30 PM</p>
+            <a href="main.html" class="sb-back"><i class="fa-solid fa-arrow-left"></i> Back to Website</a>
+        </div>
+    </nav>
+
+    <!-- ═══ RIGHT PANEL ═══ -->
+    <div class="rpanel" id="rpanel">
+
+        <!-- Progress dots -->
+        <div class="pdots" id="pdots">
+            <div class="pd active" id="pd-1"></div>
+            <div class="pd" id="pd-2"></div>
+            <div class="pd" id="pd-3"></div>
+            <div class="pd" id="pd-4"></div>
+            <div class="pd" id="pd-5"></div>
+            <div class="pd pay" id="pd-6"></div>
+            <span class="pd-lbl" id="pd-lbl">Step 1 of 6</span>
+        </div>
+
+        <!-- ══════════════════════════════
+             STEP 1 · PERSONAL INFO
+        ══════════════════════════════ -->
+        <div class="fview active" id="v1">
+            <div class="sh">
+                <div class="sh-badge"><i class="fa-solid fa-user"></i> Step 1 of 6</div>
+                <h2>Personal Information</h2>
+                <p>Enter your details exactly as they appear on your official identification documents.</p>
+            </div>
+
+            <div class="fr2">
+                <div class="fg"><label>First Name <span class="req">*</span></label><input type="text" id="firstName" placeholder="e.g. Amara"></div>
+                <div class="fg"><label>Last Name <span class="req">*</span></label><input type="text" id="lastName" placeholder="e.g. Perera"></div>
+            </div>
+            <div class="fr2">
+                <div class="fg"><label>Full Name (NIC/Passport) <span class="req">*</span></label><input type="text" placeholder="Full legal name"></div>
+                <div class="fg"><label>Date of Birth <span class="req">*</span></label><input type="date" id="dob"></div>
+            </div>
+            <div class="fr3">
+                <div class="fg"><label>Gender <span class="req">*</span></label><select><option value="">Select</option><option>Male</option><option>Female</option><option>Prefer not to say</option></select></div>
+                <div class="fg"><label>Nationality <span class="req">*</span></label><select><option selected>Sri Lankan</option><option>Indian</option><option>British</option><option>Other</option></select></div>
+                <div class="fg"><label>Religion</label><select><option value="">Select</option><option>Buddhist</option><option>Hindu</option><option>Christian</option><option>Islam</option><option>Other</option></select></div>
+            </div>
+            <div class="fr2">
+                <div class="fg"><label>NIC Number <span class="req">*</span></label><input type="text" id="nic" placeholder="e.g. 200012345678"><span class="hint">12-digit or 9-digit + V/X</span></div>
+                <div class="fg"><label>Passport Number</label><input type="text" placeholder="For international students"></div>
+            </div>
+
+            <div class="divider"><hr><span>Contact Details</span><hr></div>
+
+            <div class="fr2">
+                <div class="fg"><label>Email Address <span class="req">*</span></label><input type="email" id="email" placeholder="you@example.com"></div>
+                <div class="fg"><label>Mobile Number <span class="req">*</span></label><input type="tel" id="phone" placeholder="+94 77 000 0000"></div>
+            </div>
+            <div class="fr2">
+                <div class="fg"><label>Emergency Contact Name <span class="req">*</span></label><input type="text" placeholder="Parent / Guardian"></div>
+                <div class="fg"><label>Emergency Contact Number <span class="req">*</span></label><input type="tel" placeholder="+94 77 000 0000"></div>
+            </div>
+            <div class="fr1">
+                <div class="fg"><label>Permanent Address <span class="req">*</span></label><textarea placeholder="House No., Street, City, Postal Code"></textarea></div>
+            </div>
+            <div class="fr2">
+                <div class="fg"><label>District</label><select><option>Colombo</option><option>Galle</option><option>Kalutara</option><option>Matara</option><option>Gampaha</option><option>Kandy</option><option>Other</option></select></div>
+                <div class="fg"><label>Postal Code</label><input type="text" placeholder="e.g. 80000"></div>
+            </div>
+
+            <div class="fnav"><span></span><button class="btn-fwd" onclick="go(2)">Next: Programme <i class="fa-solid fa-arrow-right"></i></button></div>
+        </div>
+
+        <!-- ══════════════════════════════
+             STEP 2 · PROGRAMME
+        ══════════════════════════════ -->
+        <div class="fview" id="v2">
+            <div class="sh">
+                <div class="sh-badge"><i class="fa-solid fa-book-open"></i> Step 2 of 6</div>
+                <h2>Choose Your Programme</h2>
+                <p>Select the academic programme you wish to apply for.</p>
+            </div>
+
+            <div class="fg" style="margin-bottom:16px;">
+                <label>Programme Level <span class="req">*</span></label>
+                <div class="rpills" style="margin-top:6px;">
+                    <label class="rpill sel"><input type="radio" name="level" value="ug" checked onchange="pickLvl(this)"> Undergraduate</label>
+                    <label class="rpill"><input type="radio" name="level" value="pg" onchange="pickLvl(this)"> Postgraduate</label>
+                    <label class="rpill"><input type="radio" name="level" value="prof" onchange="pickLvl(this)"> Professional</label>
+                </div>
+            </div>
+
+            <div class="divider"><hr><span>Select Course</span><hr></div>
+
+            <div class="cpick-grid">
+                <div class="cpc sel" onclick="pickC(this,'cs')"><input type="radio" name="course" value="cs" checked><div class="cpc-ic">💻</div><h4>Computer Science</h4><p>Programming, algorithms, software systems.</p><div class="dur"><i class="fa-solid fa-clock"></i> 3 Years · BSc (Hons)</div></div>
+                <div class="cpc" onclick="pickC(this,'med')"><input type="radio" name="course" value="med"><div class="cpc-ic">🩺</div><h4>Medical Science</h4><p>Human biology, clinical practice & research.</p><div class="dur"><i class="fa-solid fa-clock"></i> 4 Years · BSc</div></div>
+                <div class="cpc" onclick="pickC(this,'nano')"><input type="radio" name="course" value="nano"><div class="cpc-ic">🔬</div><h4>Nanotechnology</h4><p>Atomic-scale science and nano-electronics.</p><div class="dur"><i class="fa-solid fa-clock"></i> 4 Years · BSc (Hons)</div></div>
+                <div class="cpc" onclick="pickC(this,'ai')"><input type="radio" name="course" value="ai"><div class="cpc-ic">🤖</div><h4>AI & ML Engineering</h4><p>Neural networks and intelligent systems.</p><div class="dur"><i class="fa-solid fa-clock"></i> 2 Years · MSc</div></div>
+                <div class="cpc" onclick="pickC(this,'biz')"><input type="radio" name="course" value="biz"><div class="cpc-ic">📊</div><h4>Business Management</h4><p>Leadership, strategy and global business.</p><div class="dur"><i class="fa-solid fa-clock"></i> 3 Years · BBA</div></div>
+                <div class="cpc" onclick="pickC(this,'lang')"><input type="radio" name="course" value="lang"><div class="cpc-ic">🌐</div><h4>Languages</h4><p>English, Japanese, Chinese and more.</p><div class="dur"><i class="fa-solid fa-clock"></i> 6 Months · Certificate</div></div>
+            </div>
+
+            <div class="fr2">
+                <div class="fg"><label>Preferred Intake <span class="req">*</span></label><select><option>September 2026</option><option>January 2027</option><option>September 2027</option></select></div>
+                <div class="fg"><label>Study Mode <span class="req">*</span></label><select><option>Full-time (On-campus)</option><option>Part-time (Evening)</option><option>Online</option><option>Hybrid</option></select></div>
+            </div>
+            <div class="fg" style="margin-bottom:16px;">
+                <label>Accommodation Required?</label>
+                <div class="rpills" style="margin-top:6px;">
+                    <label class="rpill"><input type="radio" name="accom" value="yes"> Yes — On Campus</label>
+                    <label class="rpill sel"><input type="radio" name="accom" value="no" checked> No</label>
+                </div>
+            </div>
+            <div class="fg" style="margin-bottom:4px;">
+                <label>How did you hear about KAUFA?</label>
+                <select><option>Social Media</option><option>Friend / Family</option><option>School Counselor</option><option>Website</option><option>Other</option></select>
+            </div>
+
+            <div class="fnav">
+                <button class="btn-back" onclick="go(1)"><i class="fa-solid fa-arrow-left"></i> Back</button>
+                <button class="btn-fwd" onclick="go(3)">Next: Education <i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+        </div>
+
+        <!-- ══════════════════════════════
+             STEP 3 · EDUCATION
+        ══════════════════════════════ -->
+        <div class="fview" id="v3">
+            <div class="sh">
+                <div class="sh-badge"><i class="fa-solid fa-graduation-cap"></i> Step 3 of 6</div>
+                <h2>Educational Background</h2>
+                <p>Provide your academic qualifications starting from O/L results.</p>
+            </div>
+
+            <div class="divider"><hr><span>O/L Results</span><hr></div>
+            <div class="fr2">
+                <div class="fg"><label>School Name <span class="req">*</span></label><input type="text" placeholder="e.g. Nalanda College, Colombo"></div>
+                <div class="fg"><label>O/L Year <span class="req">*</span></label><input type="number" placeholder="e.g. 2020" min="2000" max="2025"></div>
+            </div>
+            <div class="fr2">
+                <div class="fg"><label>Subjects Passed <span class="req">*</span></label><select><option>9 subjects</option><option>8 subjects</option><option>7 subjects</option><option>6 subjects</option></select></div>
+                <div class="fg"><label>O/L Index Number</label><input type="text" placeholder="e.g. 0012345"></div>
+            </div>
+
+            <div class="divider"><hr><span>A/L Results</span><hr></div>
+            <div class="fr2">
+                <div class="fg"><label>A/L School / College <span class="req">*</span></label><input type="text" placeholder="e.g. Royal College, Colombo"></div>
+                <div class="fg"><label>A/L Year <span class="req">*</span></label><input type="number" placeholder="e.g. 2023" min="2000" max="2026"></div>
+            </div>
+            <div class="fr3">
+                <div class="fg"><label>Subject 1</label><input type="text" placeholder="e.g. Physics"></div>
+                <div class="fg"><label>Subject 2</label><input type="text" placeholder="e.g. Chemistry"></div>
+                <div class="fg"><label>Subject 3</label><input type="text" placeholder="e.g. Maths"></div>
+            </div>
+            <div class="fr3">
+                <div class="fg"><label>Grade 1</label><select><option>A</option><option>B</option><option>C</option><option>S</option><option>F</option></select></div>
+                <div class="fg"><label>Grade 2</label><select><option>A</option><option>B</option><option>C</option><option>S</option><option>F</option></select></div>
+                <div class="fg"><label>Grade 3</label><select><option>A</option><option>B</option><option>C</option><option>S</option><option>F</option></select></div>
+            </div>
+            <div class="fr2">
+                <div class="fg"><label>Z-Score</label><input type="text" placeholder="e.g. 1.9843"></div>
+                <div class="fg"><label>A/L Index Number</label><input type="text" placeholder="e.g. 0098765"></div>
+            </div>
+
+            <div class="divider"><hr><span>Higher Education (Optional)</span><hr></div>
+            <div class="info-pill"><i class="fa-solid fa-circle-info"></i> Fill only if you hold a prior degree or diploma</div>
+            <div class="fr2">
+                <div class="fg"><label>Institution Name</label><input type="text" placeholder="e.g. University of Colombo"></div>
+                <div class="fg"><label>Qualification</label><input type="text" placeholder="e.g. BSc in IT"></div>
+            </div>
+            <div class="fr2">
+                <div class="fg"><label>GPA / Grade</label><input type="text" placeholder="e.g. 3.6 / 4.0"></div>
+                <div class="fg"><label>Year Completed</label><input type="number" placeholder="e.g. 2023"></div>
+            </div>
+
+            <div class="divider"><hr><span>Interests</span><hr></div>
+            <div class="chk-grid" style="margin-bottom:16px;">
+                <label class="chkopt"><input type="checkbox"> Programming & Software</label>
+                <label class="chkopt"><input type="checkbox"> Artificial Intelligence</label>
+                <label class="chkopt"><input type="checkbox"> Data Science</label>
+                <label class="chkopt"><input type="checkbox"> Medical Research</label>
+                <label class="chkopt"><input type="checkbox"> Nanotechnology</label>
+                <label class="chkopt"><input type="checkbox"> Business & Entrepreneurship</label>
+            </div>
+            <div class="fr1">
+                <div class="fg"><label>Personal Statement <span class="req">*</span></label><textarea style="min-height:100px;" placeholder="Tell us about your goals, why KAUFA, and what makes you a strong candidate…"></textarea><span class="hint">Minimum 150 words recommended</span></div>
+            </div>
+
+            <div class="fnav">
+                <button class="btn-back" onclick="go(2)"><i class="fa-solid fa-arrow-left"></i> Back</button>
+                <button class="btn-fwd" onclick="go(4)">Next: Documents <i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+        </div>
+
+        <!-- ══════════════════════════════
+             STEP 4 · DOCUMENTS
+        ══════════════════════════════ -->
+        <div class="fview" id="v4">
+            <div class="sh">
+                <div class="sh-badge"><i class="fa-solid fa-folder-open"></i> Step 4 of 6</div>
+                <h2>Upload Documents</h2>
+                <p>Upload clear scans or photos. Accepted: PDF, JPG, PNG · Max 5MB each.</p>
+            </div>
+
+            <div style="display:flex;flex-direction:column;gap:20px;">
+                <div>
+                    <label style="font-size:.75rem;font-weight:700;display:block;margin-bottom:8px;">NIC / Passport Copy <span style="color:var(--error)">*</span></label>
+                    <div class="upzone" onclick="document.getElementById('u-nic').click()"><i class="fa-solid fa-id-card"></i><h4>National Identity Card</h4><p>Front & back, or passport photo page</p><label class="upbtn">Choose File</label><input type="file" id="u-nic" accept=".pdf,.jpg,.jpeg,.png" onchange="handleUp(this,'uf-nic','un-nic')"></div>
+                    <div class="upfile" id="uf-nic"><i class="fa-solid fa-file-check"></i><span id="un-nic"></span><button onclick="removeUp('uf-nic','u-nic')"><i class="fa-solid fa-xmark"></i></button></div>
+                </div>
+                <div>
+                    <label style="font-size:.75rem;font-weight:700;display:block;margin-bottom:8px;">Birth Certificate <span style="color:var(--error)">*</span></label>
+                    <div class="upzone" onclick="document.getElementById('u-bc').click()"><i class="fa-solid fa-certificate"></i><h4>Birth Certificate</h4><p>Certified copy accepted</p><label class="upbtn">Choose File</label><input type="file" id="u-bc" accept=".pdf,.jpg,.jpeg,.png" onchange="handleUp(this,'uf-bc','un-bc')"></div>
+                    <div class="upfile" id="uf-bc"><i class="fa-solid fa-file-check"></i><span id="un-bc"></span><button onclick="removeUp('uf-bc','u-bc')"><i class="fa-solid fa-xmark"></i></button></div>
+                </div>
+                <div>
+                    <label style="font-size:.75rem;font-weight:700;display:block;margin-bottom:8px;">A/L Results Sheet <span style="color:var(--error)">*</span></label>
+                    <div class="upzone" onclick="document.getElementById('u-al').click()"><i class="fa-solid fa-scroll"></i><h4>A/L Certificate / Result Sheet</h4><p>Official results from Dept. of Examinations</p><label class="upbtn">Choose File</label><input type="file" id="u-al" accept=".pdf,.jpg,.jpeg,.png" onchange="handleUp(this,'uf-al','un-al')"></div>
+                    <div class="upfile" id="uf-al"><i class="fa-solid fa-file-check"></i><span id="un-al"></span><button onclick="removeUp('uf-al','u-al')"><i class="fa-solid fa-xmark"></i></button></div>
+                </div>
+                <div>
+                    <label style="font-size:.75rem;font-weight:700;display:block;margin-bottom:8px;">Passport-Size Photo <span style="color:var(--error)">*</span></label>
+                    <div class="upzone" onclick="document.getElementById('u-ph').click()"><i class="fa-solid fa-image-portrait"></i><h4>Recent Passport Photo</h4><p>White background · JPG/PNG · Within 6 months</p><label class="upbtn">Choose File</label><input type="file" id="u-ph" accept=".jpg,.jpeg,.png" onchange="handleUp(this,'uf-ph','un-ph')"></div>
+                    <div class="upfile" id="uf-ph"><i class="fa-solid fa-file-check"></i><span id="un-ph"></span><button onclick="removeUp('uf-ph','u-ph')"><i class="fa-solid fa-xmark"></i></button></div>
+                </div>
+                <div>
+                    <label style="font-size:.75rem;font-weight:700;display:block;margin-bottom:8px;">Other Documents <span style="font-weight:400;color:var(--muted)">(Optional)</span></label>
+                    <div class="upzone" onclick="document.getElementById('u-oth').click()"><i class="fa-solid fa-paperclip"></i><h4>Awards, Certificates, References</h4><p>Multiple files allowed</p><label class="upbtn">Choose Files</label><input type="file" id="u-oth" accept=".pdf,.jpg,.png" multiple onchange="handleUp(this,'uf-oth','un-oth')"></div>
+                    <div class="upfile" id="uf-oth"><i class="fa-solid fa-file-check"></i><span id="un-oth"></span><button onclick="removeUp('uf-oth','u-oth')"><i class="fa-solid fa-xmark"></i></button></div>
+                </div>
+            </div>
+
+            <div class="fnav">
+                <button class="btn-back" onclick="go(3)"><i class="fa-solid fa-arrow-left"></i> Back</button>
+                <button class="btn-fwd" onclick="go(5)">Next: Declaration <i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+        </div>
+
+        <!-- ══════════════════════════════
+             STEP 5 · DECLARATION
+        ══════════════════════════════ -->
+        <div class="fview" id="v5">
+            <div class="sh">
+                <div class="sh-badge"><i class="fa-solid fa-file-signature"></i> Step 5 of 6</div>
+                <h2>Review & Declaration</h2>
+                <p>Review your application summary, sign the declaration, then proceed to payment.</p>
+            </div>
+
+            <!-- Summary -->
+            <div style="background:var(--bg);border:1.5px solid var(--border);border-radius:13px;padding:20px;margin-bottom:18px;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:13px;">
+                    <h4 style="font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--dark);">Personal Information</h4>
+                    <button onclick="go(1)" style="background:none;border:none;color:var(--green);font-size:.75rem;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;"><i class="fa-solid fa-pen"></i> Edit</button>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;">
+                    <div style="padding:7px 0;border-bottom:1px solid var(--border);font-size:.82rem;padding-right:16px;"><span style="color:var(--muted);display:block;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px;">Name</span><span id="rv-name" style="font-weight:600;">—</span></div>
+                    <div style="padding:7px 0 7px 16px;border-bottom:1px solid var(--border);font-size:.82rem;"><span style="color:var(--muted);display:block;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px;">Email</span><span id="rv-email" style="font-weight:600;">—</span></div>
+                    <div style="padding:7px 0;font-size:.82rem;padding-right:16px;"><span style="color:var(--muted);display:block;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px;">NIC</span><span id="rv-nic" style="font-weight:600;">—</span></div>
+                    <div style="padding:7px 0 7px 16px;font-size:.82rem;"><span style="color:var(--muted);display:block;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px;">Mobile</span><span id="rv-phone" style="font-weight:600;">—</span></div>
+                </div>
+            </div>
+            <div style="background:var(--bg);border:1.5px solid var(--border);border-radius:13px;padding:20px;margin-bottom:18px;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:13px;">
+                    <h4 style="font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--dark);">Programme Selected</h4>
+                    <button onclick="go(2)" style="background:none;border:none;color:var(--green);font-size:.75rem;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;"><i class="fa-solid fa-pen"></i> Edit</button>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;">
+                    <div style="padding:7px 0;font-size:.82rem;padding-right:16px;"><span style="color:var(--muted);display:block;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px;">Course</span><span id="rv-course" style="font-weight:600;">—</span></div>
+                    <div style="padding:7px 0 7px 16px;font-size:.82rem;"><span style="color:var(--muted);display:block;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px;">Level</span><span id="rv-level" style="font-weight:600;">—</span></div>
+                </div>
+            </div>
+
+            <!-- Declaration box -->
+            <div class="decl">
+                <h4><i class="fa-solid fa-scale-balanced" style="color:var(--green);margin-right:7px;"></i>Declaration</h4>
+                <p>I hereby declare that all information provided in this application is true, complete, and accurate to the best of my knowledge. I understand that any false or misleading information may result in disqualification or dismissal. I agree to abide by all rules and regulations of KAUFA University.</p>
+                <div class="sig-wrap">
+                    <p>Type your full name as your digital signature</p>
+                    <input type="text" class="sig-inp" placeholder="Your Full Name" id="sig">
+                    <p style="margin-top:7px;font-size:.66rem;color:var(--muted);">Date: <strong id="sigDate"></strong></p>
+                </div>
+            </div>
+
+            <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:22px;">
+                <label class="chkopt"><input type="checkbox" id="chkTerms"> I accept the <a href="#" style="color:var(--green);">Terms & Conditions</a> of KAUFA University.</label>
+                <label class="chkopt"><input type="checkbox" id="chkPrivacy"> I consent to collection and use of my personal data per the <a href="#" style="color:var(--green);">Privacy Policy</a>.</label>
+            </div>
+
+            <div class="fnav">
+                <button class="btn-back" onclick="go(4)"><i class="fa-solid fa-arrow-left"></i> Back</button>
+                <button class="btn-fwd btn-gold" onclick="proceedPay()"><i class="fa-solid fa-credit-card"></i> Proceed to Payment</button>
+            </div>
+        </div>
+
+        <!-- ══════════════════════════════
+             STEP 6 · PAYMENT
+        ══════════════════════════════ -->
+        <div class="fview" id="v6">
+            <div class="sh">
+                <div class="sh-badge pay"><i class="fa-solid fa-lock"></i> Step 6 of 6 · Secure Payment</div>
+                <h2>Pay Your Fees</h2>
+                <p>Complete your fee payment to finalise your admission application.</p>
+            </div>
+
+            <div class="pay-layout">
+                <!-- LEFT: form -->
+                <div>
+                    <!-- Fee summary -->
+                    <div class="fee-box">
+                        <div class="fee-ln"><span class="fl">Tuition Fee (Semester 1)</span><span class="fv">LKR 225,000</span></div>
+                        <div class="fee-ln"><span class="fl">Registration Fee</span><span class="fv">LKR 10,000</span></div>
+                        <div class="fee-ln"><span class="fl">Exam Fee</span><span class="fv">LKR 5,000</span></div>
+                        <div class="fee-ln"><span class="fl">Library Fee</span><span class="fv">LKR 2,500</span></div>
+                        <div class="fee-ln"><span class="fl">Application Fee</span><span class="fv">LKR 2,500</span></div>
+                        <div class="fee-ln tot"><span class="fl">Total Due</span><span class="fv">LKR 245,000</span></div>
+                    </div>
+
+                    <!-- Installments -->
+                    <div class="inst-tog" onclick="togInst()">
+                        <div class="tog-sw" id="togSw"></div>
+                        <div class="tog-txt"><h4>Pay in Installments</h4><p>Split into manageable monthly amounts</p></div>
+                    </div>
+                    <div class="inst-plans" id="instPlans">
+                        <div class="iplan sel" onclick="selPlan(this)"><input type="radio" name="plan" checked><div class="iplan-info"><h4>2 Installments</h4><p>LKR 122,500 × 2 · Every 3 months</p></div><span class="ibadge ib-free">No extra fee</span></div>
+                        <div class="iplan" onclick="selPlan(this)"><input type="radio" name="plan"><div class="iplan-info"><h4>4 Installments</h4><p>LKR 62,500 × 4 · Monthly</p></div><span class="ibadge ib-fee">+2% fee</span></div>
+                        <div class="iplan" onclick="selPlan(this)"><input type="radio" name="plan"><div class="iplan-info"><h4>6 Installments</h4><p>LKR 42,500 × 6 · Monthly</p></div><span class="ibadge ib-fee">+4% fee</span></div>
+                    </div>
+
+                    <!-- Method tabs -->
+                    <div class="mtabs">
+                        <div class="mtab active" id="mt-card" onclick="switchM('card')"><i class="fa-solid fa-credit-card"></i><span>Card Payment</span></div>
+                        <div class="mtab" id="mt-bank" onclick="switchM('bank')"><i class="fa-solid fa-building-columns"></i><span>Bank Transfer</span></div>
+                        <div class="mtab" id="mt-office" onclick="switchM('office')"><i class="fa-solid fa-map-location-dot"></i><span>At Office</span></div>
+                    </div>
+
+                    <!-- CARD -->
+                    <div id="m-card">
+                        <div class="card-vis">
+                            <div class="cv-chip"></div>
+                            <div class="cv-num" id="cvNum">•••• •••• •••• ••••</div>
+                            <div class="cv-bot">
+                                <div><div class="cv-lbl">Card Holder</div><div class="cv-val" id="cvName">YOUR NAME</div></div>
+                                <div><div class="cv-lbl">Expires</div><div class="cv-val" id="cvExp">MM/YY</div></div>
+                            </div>
+                            <div class="cv-brand" id="cvBrand">VISA</div>
+                        </div>
+                        <div class="fg" style="margin-bottom:14px;"><label>Card Number</label><div class="ii-wrap"><input type="text" id="cardNum" maxlength="19" placeholder="0000 0000 0000 0000" oninput="fmtCard(this)"><i class="fa-solid fa-credit-card"></i></div></div>
+                        <div class="fg" style="margin-bottom:14px;"><label>Cardholder Name</label><input type="text" id="cardName" placeholder="As printed on card" oninput="updCName(this)"></div>
+                        <div class="fr2">
+                            <div class="fg"><label>Expiry Date</label><input type="text" id="cardExp" maxlength="5" placeholder="MM / YY" oninput="fmtExp(this)"></div>
+                            <div class="fg"><label>CVV / CVC</label><div class="ii-wrap"><input type="password" maxlength="4" placeholder="•••"><i class="fa-solid fa-question-circle"></i></div></div>
+                        </div>
+                        <div class="fg" style="margin-bottom:14px;"><label>Billing Email</label><input type="email" placeholder="you@example.com"></div>
+                        <div style="display:flex;align-items:center;gap:8px;padding:10px 12px;background:var(--bg);border-radius:8px;font-size:.76rem;color:var(--muted);margin-bottom:13px;"><i class="fa-solid fa-shield-halved" style="color:var(--green);font-size:.9rem;"></i> Your card details are encrypted and never stored on our servers.</div>
+                        <button class="pay-btn" onclick="startPay()"><i class="fa-solid fa-lock"></i> Pay LKR 245,000 Securely</button>
+                        <p class="sec-note"><i class="fa-solid fa-shield-halved"></i> 256-bit SSL Encryption</p>
+                    </div>
+
+                    <!-- BANK -->
+                    <div id="m-bank" style="display:none;">
+                        <div class="bank-box">
+                            <h4><i class="fa-solid fa-building-columns" style="color:var(--green);margin-right:7px;"></i>Bank Account Details</h4>
+                            <div class="brow"><span class="bl">Bank Name</span><span class="bv">Bank of Ceylon</span><button class="copybtn" onclick="cpTxt('Bank of Ceylon',event)">Copy</button></div>
+                            <div class="brow"><span class="bl">Account Name</span><span class="bv">KAUFA University</span><button class="copybtn" onclick="cpTxt('KAUFA University',event)">Copy</button></div>
+                            <div class="brow"><span class="bl">Account No.</span><span class="bv">7654321000</span><button class="copybtn" onclick="cpTxt('7654321000',event)">Copy</button></div>
+                            <div class="brow"><span class="bl">Branch</span><span class="bv">Bentota</span><button class="copybtn" onclick="cpTxt('Bentota',event)">Copy</button></div>
+                            <div class="brow"><span class="bl">Reference</span><span class="bv" id="bankRef">Your Student ID</span><button class="copybtn" onclick="cpTxt(document.getElementById('bankRef').textContent,event)">Copy</button></div>
+                        </div>
+                        <div style="background:var(--orange-pale);border:1px solid #ffe0b2;border-radius:9px;padding:11px 14px;font-size:.77rem;color:var(--orange);display:flex;gap:8px;margin-bottom:14px;"><i class="fa-solid fa-triangle-exclamation"></i><div>Upload your bank slip below or email to <strong>finance@kaufa.edu.lk</strong> with your Student ID as subject.</div></div>
+                        <div class="fr2">
+                            <div class="fg"><label>Transaction Reference</label><input type="text" placeholder="e.g. TXN2026012345"></div>
+                            <div class="fg"><label>Date of Transfer</label><input type="date"></div>
+                        </div>
+                        <div style="border:2px dashed var(--border);border-radius:10px;padding:20px;text-align:center;cursor:pointer;margin-bottom:14px;" onclick="document.getElementById('slip').click()">
+                            <i class="fa-solid fa-file-arrow-up" style="font-size:1.5rem;color:var(--green-mid);display:block;margin-bottom:7px;"></i>
+                            <h4 style="font-size:.84rem;font-weight:600;margin-bottom:2px;">Upload Bank Slip</h4>
+                            <p style="font-size:.72rem;color:var(--muted);">PDF, JPG or PNG · Max 5MB</p>
+                            <input type="file" id="slip" style="display:none;" accept=".pdf,.jpg,.png">
+                        </div>
+                        <button class="pay-btn" onclick="startPay()"><i class="fa-solid fa-paper-plane"></i> Submit Payment Confirmation</button>
+                    </div>
+
+                    <!-- OFFICE -->
+                    <div id="m-office" style="display:none;">
+                        <div class="off-wrap">
+                            <div class="off-step"><div class="off-num">1</div><div><h4>Visit the Finance Office</h4><p>Ground Floor, Admin Block, KAUFA University, Sirisewana, Bentota. Mon–Fri: 8:30 AM – 3:30 PM</p></div></div>
+                            <div class="off-step"><div class="off-num">2</div><div><h4>Bring Required Documents</h4><p>Application reference, NIC/Passport, and payment in cash or cheque payable to "KAUFA University".</p></div></div>
+                            <div class="off-step"><div class="off-num">3</div><div><h4>Collect Your Receipt</h4><p>A printed official receipt will be issued immediately.</p></div></div>
+                            <div class="off-step"><div class="off-num">4</div><div><h4>Confirmation Email</h4><p>Sent to your registered email within 2 business hours.</p></div></div>
+                        </div>
+                        <div style="background:var(--green-pale);border:1.5px solid var(--green-mid);border-radius:9px;padding:12px 14px;font-size:.8rem;color:var(--green);margin-bottom:13px;"><i class="fa-solid fa-circle-info" style="margin-right:6px;"></i>Accepted: Cash (LKR), Cheque, Debit/Credit Card (POS terminal available).</div>
+                        <button class="pay-btn" style="background:linear-gradient(135deg,#3a4a3a,#1a2a1a);" onclick="startPay()"><i class="fa-solid fa-location-dot"></i> Confirm Office Visit</button>
+                    </div>
+                </div>
+
+                <!-- RIGHT: order summary -->
+                <div class="ord-card">
+                    <div class="ord-head"><h3>Application Summary</h3><p>Academic Year 2025/2026</p></div>
+                    <div class="ord-body">
+                        <div class="ord-stu">
+                            <div class="ord-av"><i class="fa-solid fa-user-graduate"></i></div>
+                            <div><h4 id="os-name">—</h4><p>New Applicant</p></div>
+                        </div>
+                        <div class="ord-ln"><span class="ol">Programme</span><span class="ov" id="os-course">—</span></div>
+                        <div class="ord-ln"><span class="ol">Level</span><span class="ov" id="os-level">—</span></div>
+                        <div class="ord-ln"><span class="ol">Tuition Fee</span><span class="ov">LKR 225,000</span></div>
+                        <div class="ord-ln"><span class="ol">Registration</span><span class="ov">LKR 10,000</span></div>
+                        <div class="ord-ln"><span class="ol">Exam + Library</span><span class="ov">LKR 7,500</span></div>
+                        <div class="ord-ln"><span class="ol">Application Fee</span><span class="ov">LKR 2,500</span></div>
+                        <div class="ord-tot"><span class="otl">Total Due</span><span class="otv">LKR 245,000</span></div>
+                        <div class="ord-badges">
+                            <div class="ob"><i class="fa-solid fa-lock"></i> SSL Secured</div>
+                            <div class="ob"><i class="fa-solid fa-shield-halved"></i> PCI Compliant</div>
+                            <div class="ob"><i class="fa-solid fa-rotate-left"></i> Receipt Issued</div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /pay-layout -->
+
+            <div class="fnav" style="margin-top:0;">
+                <button class="btn-back" onclick="go(5)"><i class="fa-solid fa-arrow-left"></i> Back</button>
+                <span style="font-size:.72rem;color:var(--muted);"><i class="fa-solid fa-lock" style="color:var(--green);"></i> Secure & Encrypted</span>
+            </div>
+        </div>
+
+        <!-- ══════════════════════════════
+             PROCESSING SCREEN
+        ══════════════════════════════ -->
+        <div class="fview" id="v-proc">
+            <div class="proc-wrap">
+                <div class="proc-inner">
+                    <div class="proc-ring"></div>
+                    <h3>Processing Your Payment…</h3>
+                    <p>Please don't close this window or press Back.<br>This takes just a moment.</p>
+                    <div class="proc-steps">
+                        <div class="pstep" id="ps1"><i class="fa-solid fa-circle-notch fa-spin"></i> Validating card details</div>
+                        <div class="pstep" id="ps2"><i class="fa-regular fa-circle"></i> Connecting to payment gateway</div>
+                        <div class="pstep" id="ps3"><i class="fa-regular fa-circle"></i> Authorizing transaction</div>
+                        <div class="pstep" id="ps4"><i class="fa-regular fa-circle"></i> Confirming & recording payment</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ══════════════════════════════
+             RECEIPT / SUCCESS
+        ══════════════════════════════ -->
+        <div class="receipt-wrap" id="v-receipt">
+            <div class="rec-hero">
+                <div class="rec-chk"><i class="fa-solid fa-check"></i></div>
+                <h2>Application Complete!</h2>
+                <p>Your admission application and payment have been successfully submitted.</p>
+                <div class="rec-ref" id="recRef">KAUFA-2026-0000</div>
+            </div>
+            <div class="rec-panel">
+                <div class="rec-ph"><h3><i class="fa-solid fa-receipt" style="color:var(--green);margin-right:8px;"></i>Official Payment Receipt</h3></div>
+                <div class="rec-body">
+                    <div class="rec-row"><span class="rl">Applicant Name</span><span class="rv" id="rc-name">—</span></div>
+                    <div class="rec-row"><span class="rl">Application Ref.</span><span class="rv" id="rc-ref">—</span></div>
+                    <div class="rec-row"><span class="rl">Programme</span><span class="rv" id="rc-course">—</span></div>
+                    <div class="rec-row"><span class="rl">Payment Date</span><span class="rv" id="rc-date">—</span></div>
+                    <div class="rec-row"><span class="rl">Payment Method</span><span class="rv" id="rc-method">—</span></div>
+                    <div class="rec-row"><span class="rl">Transaction ID</span><span class="rv" id="rc-txn">—</span></div>
+                    <div class="rec-row"><span class="rl">Status</span><span class="rv" style="color:var(--green);"><i class="fa-solid fa-circle-check"></i> Verified & Approved</span></div>
+                    <div style="height:12px;"></div>
+                    <div class="rec-row"><span class="rl">Tuition Fee (Sem 1)</span><span class="rv">LKR 225,000</span></div>
+                    <div class="rec-row"><span class="rl">Registration Fee</span><span class="rv">LKR 10,000</span></div>
+                    <div class="rec-row"><span class="rl">Exam + Library Fee</span><span class="rv">LKR 7,500</span></div>
+                    <div class="rec-row"><span class="rl">Application Fee</span><span class="rv">LKR 2,500</span></div>
+                    <div class="rec-tot"><span class="rtl">Total Paid</span><span class="rtv">LKR 245,000</span></div>
+                    <p style="font-size:.75rem;color:var(--muted);line-height:1.65;margin-bottom:18px;">A confirmation email has been sent to your registered address. Our admissions team will contact you within <strong>7 business days</strong>.</p>
+                    <div class="rec-actions">
+                        <button class="rbtn pri" onclick="window.print()"><i class="fa-solid fa-print"></i> Print Receipt</button>
+                        <a href="lms.html" class="rbtn sec"><i class="fa-solid fa-gauge"></i> Go to LMS</a>
+                        <a href="main.html" class="rbtn out"><i class="fa-solid fa-house"></i> Home</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div><!-- /rpanel -->
+</div><!-- /shell -->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+    crossorigin="anonymous"></script>
+<script>
+    let cur = 1;
+    const TOTAL = 6;
+    const cLabels = { cs:'Computer Science', med:'Medical Science', nano:'Nanotechnology', ai:'AI & ML Engineering', biz:'Business Management', lang:'Languages' };
+
+    document.getElementById('sigDate').textContent = new Date().toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});
+
+    /* ── NAV ── */
+    function go(step) {
+        if (step < 1 || step > TOTAL) return;
+        document.getElementById('v'+cur).classList.remove('active');
+        document.getElementById('v'+step).classList.add('active');
+        cur = step;
+        syncUI(step);
+        window.scrollTo({top:0, behavior:'smooth'});
+    }
+    function jump(step) { if (step <= cur) go(step); }
+
+    function syncUI(step) {
+        // Sidebar
+        for (let i = 1; i <= TOTAL; i++) {
+            const item = document.querySelector(`.trk-item[data-step="${i}"]`);
+            const dot  = document.getElementById('dot-'+i);
+            item.classList.remove('active','inactive','done');
+            if (i < step)       { item.classList.add('done');    dot.innerHTML = '<i class="fa-solid fa-check" style="font-size:.6rem"></i>'; }
+            else if (i === step){ item.classList.add('active');  dot.textContent = i===6?'':i; if(i===6) dot.innerHTML='<i class="fa-solid fa-credit-card" style="font-size:.6rem"></i>'; }
+            else                { item.classList.add('inactive');dot.textContent = i===6?'':i; if(i===6) dot.innerHTML='<i class="fa-solid fa-credit-card" style="font-size:.6rem"></i>'; }
+        }
+        // Progress dots
+        for (let i = 1; i <= TOTAL; i++) {
+            const pd = document.getElementById('pd-'+i);
+            pd.classList.remove('active','done');
+            if (i < step)       pd.classList.add('done');
+            else if (i === step) pd.classList.add('active');
+        }
+        document.getElementById('pd-lbl').textContent = `Step ${step} of ${TOTAL}`;
+    }
+
+    /* ── PROCEED TO PAYMENT ── */
+    function proceedPay() {
+        if (!document.getElementById('chkTerms').checked || !document.getElementById('chkPrivacy').checked) {
+            alert('Please accept the Terms & Conditions and Privacy Policy.');
+            return;
+        }
+        if (!document.getElementById('sig').value.trim()) {
+            alert('Please provide your digital signature.');
+            return;
+        }
+        populateSummary();
+        go(6);
+    }
+
+    function populateSummary() {
+        const fn = document.getElementById('firstName').value || '—';
+        const ln = document.getElementById('lastName').value  || '—';
+        const name = (fn + ' ' + ln).trim();
+        document.getElementById('rv-name').textContent  = name;
+        document.getElementById('rv-email').textContent = document.getElementById('email').value || '—';
+        document.getElementById('rv-nic').textContent   = document.getElementById('nic').value   || '—';
+        document.getElementById('rv-phone').textContent = document.getElementById('phone').value || '—';
+
+        const cc = document.querySelector('input[name="course"]:checked');
+        const cl = document.querySelector('input[name="level"]:checked');
+        const course = cc ? (cLabels[cc.value] || cc.value) : '—';
+        const level  = cl ? (cl.value.charAt(0).toUpperCase() + cl.value.slice(1)) : '—';
+        document.getElementById('rv-course').textContent = course;
+        document.getElementById('rv-level').textContent  = level;
+
+        // Order summary
+        document.getElementById('os-name').textContent   = name;
+        document.getElementById('os-course').textContent = course;
+        document.getElementById('os-level').textContent  = level;
+    }
+
+    /* ── PAYMENT ── */
+    function startPay() {
+        document.getElementById('v6').classList.remove('active');
+        document.getElementById('v-proc').classList.add('active');
+        document.getElementById('pdots').style.display = 'none';
+        // All sidebar done
+        for (let i = 1; i <= TOTAL; i++) {
+            const item = document.querySelector(`.trk-item[data-step="${i}"]`);
+            item.classList.remove('active','inactive');
+            item.classList.add('done');
+            document.getElementById('dot-'+i).innerHTML = '<i class="fa-solid fa-check" style="font-size:.6rem"></i>';
+        }
+        const steps = ['ps1','ps2','ps3','ps4'];
+        steps.forEach((id,idx) => {
+            setTimeout(() => {
+                const el = document.getElementById(id);
+                el.classList.add('done');
+                el.innerHTML = '<i class="fa-solid fa-circle-check"></i> ' + el.textContent.trim();
+            }, (idx+1)*980);
+        });
+        setTimeout(() => {
+            const txn  = 'KAUFA-2026-' + Math.floor(10000 + Math.random()*90000);
+            const fn   = document.getElementById('firstName').value || '—';
+            const ln   = document.getElementById('lastName').value  || '—';
+            const cc   = document.querySelector('input[name="course"]:checked');
+            const course = cc ? (cLabels[cc.value] || cc.value) : '—';
+            const last4 = (document.getElementById('cardNum').value || '').replace(/\s/g,'').slice(-4) || '——';
+
+            document.getElementById('rc-name').textContent   = (fn+' '+ln).trim();
+            document.getElementById('rc-ref').textContent    = txn;
+            document.getElementById('rc-course').textContent = course;
+            document.getElementById('rc-date').textContent   = new Date().toLocaleString('en-GB',{day:'numeric',month:'long',year:'numeric',hour:'2-digit',minute:'2-digit'});
+            document.getElementById('rc-method').textContent = 'Card Payment ···· ' + last4;
+            document.getElementById('rc-txn').textContent    = txn;
+            document.getElementById('recRef').textContent    = txn;
+
+            document.getElementById('v-proc').classList.remove('active');
+            document.getElementById('v-receipt').classList.add('active');
+            window.scrollTo({top:0, behavior:'smooth'});
+        }, 5100);
+    }
+
+    /* ── CARD FORMATTING ── */
+    function fmtCard(inp) {
+        let v = inp.value.replace(/\D/g,'').substring(0,16);
+        inp.value = v.replace(/(.{4})/g,'$1 ').trim();
+        document.getElementById('cvNum').textContent = (inp.value || '').padEnd(19,'•').replace(/[^\d •]/g,'•') || '•••• •••• •••• ••••';
+        const b = document.getElementById('cvBrand');
+        if (v.startsWith('4'))     b.textContent='VISA';
+        else if(/^5|^2/.test(v))   b.textContent='MC';
+        else if(v.startsWith('3')) b.textContent='AMEX';
+        else                       b.textContent='CARD';
+    }
+    function fmtExp(inp) {
+        let v = inp.value.replace(/\D/g,'').substring(0,4);
+        if (v.length >= 2) v = v.slice(0,2)+'/'+v.slice(2);
+        inp.value = v;
+        document.getElementById('cvExp').textContent = v || 'MM/YY';
+    }
+    function updCName(inp) { document.getElementById('cvName').textContent = inp.value.toUpperCase() || 'YOUR NAME'; }
+
+    /* ── METHOD SWITCH ── */
+    function switchM(m) {
+        ['card','bank','office'].forEach(x => {
+            document.getElementById('mt-'+x).classList.toggle('active', x===m);
+            document.getElementById('m-'+x).style.display = x===m ? 'block' : 'none';
+        });
+    }
+
+    /* ── INSTALLMENTS ── */
+    let instOn = false;
+    function togInst() {
+        instOn = !instOn;
+        document.getElementById('togSw').classList.toggle('on', instOn);
+        document.getElementById('instPlans').classList.toggle('show', instOn);
+    }
+    function selPlan(el) {
+        document.querySelectorAll('.iplan').forEach(p => p.classList.remove('sel'));
+        el.classList.add('sel');
+        el.querySelector('input').checked = true;
+    }
+
+    /* ── UPLOADS ── */
+    function handleUp(inp, fid, nid) {
+        if (inp.files.length > 0) {
+            document.getElementById(nid).textContent = inp.files.length > 1 ? inp.files.length+' files selected' : inp.files[0].name;
+            document.getElementById(fid).style.display = 'flex';
+        }
+    }
+    function removeUp(fid, uid) { document.getElementById(fid).style.display='none'; document.getElementById(uid).value=''; }
+
+    /* ── COURSE / LEVEL SELECT ── */
+    function pickC(el, val) {
+        document.querySelectorAll('.cpc').forEach(c => c.classList.remove('sel'));
+        el.classList.add('sel'); el.querySelector('input').checked = true;
+    }
+    function pickLvl(inp) {
+        document.querySelectorAll('.rpill').forEach(r => r.classList.remove('sel'));
+        inp.closest('.rpill').classList.add('sel');
+    }
+
+    /* ── COPY ── */
+    function cpTxt(txt, evt) {
+        navigator.clipboard.writeText(txt).then(() => {
+            const b = evt.target; const o = b.textContent;
+            b.textContent='✓'; b.style.color='var(--green)';
+            setTimeout(() => { b.textContent=o; b.style.color=''; }, 1400);
+        });
+    }
+</script>
+</body>
+</html>

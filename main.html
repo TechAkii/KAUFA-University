@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>KAUFA - Learning Management System</title>
+
+    <link rel="stylesheet" href="main.css">
+    <script src="main.js" defer></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <link rel="icon" type="image/png" href="2.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+</head>
+
+<body>
+
+    <header>
+        <div class="mail-location">
+            <a href="mailto:info@kaufa.com"><i class="fa-regular fa-envelope"></i>&nbsp; info@kaufa.com</a>
+            &nbsp;&nbsp;&nbsp;
+            <a
+                href="https://www.google.com/maps/place/Bentota/@6.4256562,79.9830582,14zdata=!3m1!4b1!4m6!3m5!1s0x3ae22e900168ca21:0x96c438f00a68c060!8m2!3d6.4187604!4d80.002455!16zL20vMGM3bDBn?entry=ttu&g_ep=EgoyMDI1MTEyMy4xIKXMDSoASAFQAw%3D%3D">
+                <i class="fa-solid fa-location-dot"></i>&nbsp; Sirisewana, Bentota, Sri Lanka</a>
+        </div>
+
+        <div class="header-buttons">
+            <div class="login-btn">
+                <a href="login.html"><i class="fa-regular fa-user"></i>
+                    <span>Login</span></a>
+            </div>
+            <a href="#contact-section"><button class="contact-btn">Contact Us</button></a>
+        </div>
+    </header>
+
+    <nav class="navbar navbar-expand-lg bg-body-tertiary " >
+        <div class="container-fluid">
+
+            <a class="navbar-brand" href="main.html"><img src="1.png" alt="logo" style="height:60px; padding: 0; margin: 0;"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
+                aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarScroll">
+                <ul class="navbar-nav mx-auto my-3 my-lg-2 navbar-nav-scroll" style="--bs-scroll-height: 170px; ">
+                    <li class="nav-item mx-3">
+                        <a class="nav-link active" aria-current="page" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item mx-3">
+                        <a class="nav-link" href="#about">About Us</a>
+                    </li>
+                    <li class="nav-item mx-3">
+                        <a class="nav-link" href="#gallery-section">Facilities</a>
+                    </li>
+                    <li class="nav-item mx-3">
+                        <a class="nav-link" href="#accommadation-section">Accomadations</a>
+                    </li>
+                    <li class="nav-item mx-3">
+                        <a class="nav-link" href="#fees-section">Courses</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            Admission
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#admission">Academic staff</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#admission">Students</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <section id="home">
+        <div class="slider">
+
+            <div class="slide active">
+                <img src="https://images.alphacoders.com/932/thumb-1920-932313.jpg" alt="Campus Image 1">
+                <div class="slide-content">
+                    <span>KAUFA University</span><br><br>
+                    <h1>Institution of Higher Education</h1>
+                    <p>We believe everyone should have the opportunity to create progress through technology.</p>
+                    <br><br><br><br>
+                    <a href="#courses-new" class="find-course">Find Courses</a>
+                </div>
+            </div>
+
+            <div class="slide">
+                <img src="https://www.ox.ac.uk/sites/files/oxford/styles/ow_medium_feature/s3/field/field_image_main/OUImages_100003_crop2.jpg?itok=IBW966Td"
+                    alt="Campus Image 2">
+                <div class="slide-content">
+                    <span>KAUFA University</span><br><br>
+                    <h1>Together we'll explore new things</h1>
+                    <p>We believe everyone should have the opportunity to create progress through technology.</p>
+                    <br><br><br><br>
+                    <a href="#courses-new" class="find-course">Find Courses</a>
+                </div>
+            </div>
+
+            <div class="slide">
+                <img src="https://oxford.tours/wp-content/uploads/2022/09/oxford-university-sunset.jpg"
+                    alt="Campus Image 3">
+                <div class="slide-content">
+                    <span>KAUFA University</span><br><br>
+                    <h1>Learn without limits</h1>
+                    <p>Start your learning journey with <b>KAUFA University</b>.</p><br><br><br><br>
+                    <a href="#courses-new" class="find-course">Find Courses</a>
+                </div>
+            </div>
+
+        </div>
+
+        <button class="arrow arrow-left" onclick="changeSlide(-1)">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+
+        <button class="arrow arrow-right" onclick="changeSlide(1)">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+    </section>
+
+    <section id="about">
+        <div class="info-content">
+
+            <div class="education">
+                <i class="fa-solid fa-graduation-cap">&nbsp;Graduation</i>
+                <p>KAUFA University was established and is nationally recognized.</p>
+                <p><a href="blog.html">Learn More <i class="fa-solid fa-arrow-right-long"></i></a></p>
+            </div>
+
+            <div class="uni-life">
+                <i class="fa-solid fa-building-columns">&nbsp; University Life</i>
+                <p>Experience a vibrant environment designed to support your academic journey.</p>
+                <p><a href="blog.html">Learn More <i class="fa-solid fa-arrow-right-long"></i></a></p>
+            </div>
+
+            <div class="edu-serv">
+                <i class="fa-solid fa-book"> &nbsp;Education Service</i>
+                <p>We provide high-quality education and student-centered services.</p>
+                <p><a href="blog.html">Learn More <i class="fa-solid fa-arrow-right-long"></i></a></p>
+            </div>
+
+        </div>
+        <div class="masonry-gallery">
+            <h1>Campus Moments</h1>
+
+            <div class="masonry-grid">
+                <div class="masonry-item tall">
+                    <img src="https://media.istockphoto.com/id/1779070756/photo/two-university-students-walk-down-campus-stairs.jpg?s=612x612&w=0&k=20&c=N7d2_6_aoPReJd9b6fUMG9xWwEj-yX9UG-qjdcIxws0="
+                        alt="Campus" loading="lazy">
+                </div>
+                <div class="masonry-item">
+                    <img src="https://www.usnews.com/dims4/USNEWS/79eb9d6/2147483647/thumbnail/970x647/quality/85/?url=https%3A%2F%2Fwww.usnews.com%2Fcmsmedia%2F9b%2F5a%2Fc2f5a4f84960a66aa9276432b51b%2Fgettyimages-1478520911.jpg"
+                        alt="Students" loading="lazy">
+                </div>
+                <div class="masonry-item wide">
+                    <img src="https://images.shiksha.com/mediadata/images/1533799020php51QuI1.jpeg" alt="Building 3" loading="lazy">
+                </div>
+                <div class="masonry-item">
+                    <img src="https://erudera.com/media/images/2021_11_University-of-Washington.original.jpg"
+                        alt="Building 3" loading="lazy">
+                </div>
+                <div class="masonry-item tall">
+                    <img src="https://www.ox.ac.uk/sites/files/oxford/Library.jpg"
+                        alt="Library" loading="lazy">
+                </div>
+                <div class="masonry-item">
+                    <img src="https://illinois.edu/wp-content/uploads/2025/10/foellinger-auditorium-1024x682.jpeg"
+                        alt="Building 4" loading="lazy">
+                </div>
+                <div class="masonry-item">
+                    <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/16/1d/dc/f3/the-university-of-oxford.jpg?w=1200&h=-1&s=1"
+                        alt="Garden 3" loading="lazy">
+                </div>
+                <div class="masonry-item">
+                    <img src="https://www.mytutor.co.uk/blog/wp-content/uploads/2023/01/sport.jpeg" alt="Sport" loading="lazy">
+                </div>
+                <div class="masonry-item">
+                    <img src="https://business.stthomas.edu/_media-library/opus-edge/events/images/opus-college-business-comedian-speaker.jpg"
+                        alt="Party" loading="lazy">
+                </div>
+                <div class="masonry-item">
+                    <img src="https://www.newcastle.edu.au/__data/assets/image/0009/1033947/events-header-nov-2024.jpg"
+                        alt="Party" loading="lazy">
+                </div>
+                <div class="masonry-item">
+                    <img src="https://events.gsu.edu/files/2024/08/commencement_cvc_poster-1080x720.jpg"
+                        alt="Graduation" loading="lazy">
+                </div>
+                <div class="masonry-item">
+                    <img src="https://www.qmul.ac.uk/media/qmul/undergraduate/openday/images/UG-Open-Day-800x800.jpg"
+                        alt="Party" loading="lazy">
+                </div>
+
+            </div>
+            </div>
+        </section>
+
+
+
+
+
+
+        <section class="photo-layout">
+
+            <img src="https://wallpaperaccess.com/full/6592911.jpg" alt="large-photo" class="large-photo" loading="lazy">
+
+            <div class="right-stack">
+                <img src="https://students.duke.edu/wp-content/uploads/2022/06/Aug22_DI9A4560x-1.jpg" alt="small-photo"
+                    class="small-photo" loading="lazy">
+                <img src="https://www.cardiff.ac.uk/__data/assets/image/0018/480015/chemistry-students-in-lecture-theatre.jpeg"
+                    alt="small-photo" class="small-photo" loading="lazy">
+            </div>
+
+            <div class="photo-content">
+                <h1>About KAUFA</h1>
+                <p class="topic">Degrees in Various academic Disciplines</p>
+                <p>Not only can university offer an environment rich in our social an cultural experiences.</p>
+                <div class="check-item">
+                    <i class="fa-solid fa-check"></i>
+                    <span>Access to all our courses</span>
+                </div>
+
+                <div class="check-item">
+                    <i class="fa-solid fa-check"></i>
+                    <span>Learn the latest skills</span>
+                </div>
+
+                <div class="check-item">
+                    <i class="fa-solid fa-check"></i>
+                    <span>Upskill your organization</span>
+                </div>
+                <a href="blog.html" class="read-more">Read More</a>
+
+            </div>
+        </section>
+    </section>
+
+
+
+
+    <section class="gallery-section" id="gallery-section">
+        <p class="topic">Campus Life</p>
+        <h1>Experience KAUFA</h1>
+
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <img src="https://highambition.org/wp-content/uploads/2025/05/av_imagen.jpeg" alt="Campus Building" loading="lazy">
+                <div class="gallery-overlay">
+                    <h3>Modern Campus</h3>
+                    <p>State-of-the-art facilities</p>
+                </div>
+            </div>
+
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1571260899304-425eee4c7efc?w=800" alt="Students Studying" loading="lazy">
+                <div class="gallery-overlay">
+                    <h3>Student Life</h3>
+                    <p>Collaborative learning environment</p>
+                </div>
+            </div>
+
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1498243691581-b145c3f54a5a?w=800" alt="Library" loading="lazy">
+                <div class="gallery-overlay">
+                    <h3>Library</h3>
+                    <p>Extensive research resources</p>
+                </div>
+            </div>
+
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800"
+                    alt="Students Collaborating" loading="lazy">
+                <div class="gallery-overlay">
+                    <h3>Teamwork</h3>
+                    <p>Building future leaders</p>
+                </div>
+            </div>
+
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=800" alt="Graduation" loading="lazy">
+                <div class="gallery-overlay">
+                    <h3>Graduation</h3>
+                    <p>Celebrating success</p>
+                </div>
+            </div>
+
+            <div class="gallery-item">
+                <img src="https://images.stockcake.com/public/e/6/4/e6402010-95fa-4334-9027-cd084e4a5b79_large/campus-green-building-stockcake.jpg"
+                    alt="Campus Garden" loading="lazy">
+                <div class="gallery-overlay">
+                    <h3>Green Campus</h3>
+                    <p>Nature and learning combined</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <section class="stats-row">
+        <div class="stat-box">
+            <div class="top">
+                <i class="fa-solid fa-globe"></i>
+                <h2>3+</h2>
+            </div>
+            <p>Years of Language Education Experience</p>
+        </div>
+
+        <div class="stat-box">
+            <div class="top">
+                <i class="fa-solid fa-laptop"></i>
+                <h2>99+</h2>
+            </div>
+            <p>Innovative Foreign Online Courses</p>
+        </div>
+
+        <div class="stat-box">
+            <div class="top">
+                <i class="fa-solid fa-users"></i>
+                <h2>10+</h2>
+            </div>
+            <p>Qualified Teachers and Language Experts</p>
+        </div>
+
+        <div class="stat-box">
+            <div class="top">
+                <i class="fa-solid fa-book-atlas"></i>
+                <h2>11+</h2>
+            </div>
+            <p>Learners Enrolled in Educal Courses</p>
+        </div>
+    </section>
+
+
+
+    <section class="courses-new" id="courses-new">
+        <h3>Top Courses</h3>
+        <h1>Our Featured Courses</h1>
+
+        <div class="course-image">
+            <div class="course-image-grid">
+                <div class="img1">
+                    <img src="https://www.bucknell.edu/sites/default/files/styles/2_1_l/public/libris/C00001GOQFVeT0YE/G0000xGr1JWPRvo0/CompSci059.jpg"
+                        alt="Computer Science" loading="lazy">
+                </div>
+                <div class="img">
+                    <h2>Computer Science</h2>
+                    <p><b>Computer Science</b> is the foundation of modern technology. This course teaches students how
+                        computers work, how software is built, and how to solve real-world problems using logic and
+                        programming.
+                        Students will learn programming, algorithms, data structures, databases, and the fundamentals of
+                        building software systems.</p>
+                </div>
+
+            </div>
+            <div class="course-image-grid">
+                <div class="img1">
+                    <img src="https://physiciansallianceofconnecticut.com/wp-content/uploads/2024/12/AdobeStock_174687350-scaled.jpeg"
+                        alt="Medical Science" loading="lazy">
+                </div>
+                <div class="img">
+                    <h2>Medical Science</h2>
+                    <p><b>Medical Science</b> explores human biology, health, and disease.
+                        Students learn how the body works, how illnesses develop, and how medical professionals diagnose
+                        and treat patients.
+                        Ideal for learners aiming for careers in medicine, nursing, or healthcare research.</p>
+                </div>
+            </div>
+            <div class="course-image-grid">
+                <div class="img1">
+                    <img src="https://micronanoeducation.org/wp-content/uploads/2021/02/NREL-Scientist-Using-Nanotechnology-MBE-System-_MNT-EC-1.jpg"
+                        alt="Nano Technology" loading="lazy">
+                </div>
+                <div class="img">
+                    <h2>Nano Technology</h2>
+                    <p><b>Nanotechnology</b> is the science of manipulating matter at the atomic and molecular levels.
+                        This course introduces students to nano-materials, nano-electronics, and how nanotech is
+                        transforming industries from medicine to engineering.
+                        A perfect field for those who want to work with cutting-edge technology.</p>
+                </div>
+            </div>
+            <div class="course-image-grid">
+                <div class="img1">
+                    <img src="https://img.freepik.com/premium-photo/future-artificial-intelligence-robot-network-system-background_432372-88.jpg"
+                        alt="AI/ML Engineering" loading="lazy">
+                </div>
+                <div class="img">
+                    <h2>AI/ML Engineering</h2>
+                    <p><b>AI and Machine Learning </b>focus on building intelligent systems that can learn, adapt, and
+                        make
+                        decisions.
+                        This course covers neural networks, deep learning, data science, predictive modeling, and how AI
+                        is used in industries like healthcare, finance, and robotics.
+                        Perfect for students interested in the future of automation and intelligent technologies.</p>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <section class="research">
+        <p class="topic">Discover Research</p>
+        <h1>Life Changing Research</h1>
+
+        <div class="research-section">
+
+            <div class="research-grid">
+
+                <img src="https://meet.nyu.edu/wp-content/uploads/2022/11/15-0610_AB_7727-scaled.jpg"
+                    alt="Frontier Research" loading="lazy">
+                <h1>Frontier Research</h1>
+                <p>Pushing the boundaries of knowledge with bold, high-impact discoveries.
+                    Our Frontier Research division focuses on exploring unexplored scientific areas, developing
+                    breakthrough technologies, and driving innovations that shape the future. From advanced computing to
+                    next-generation biotechnology, we empower researchers to think beyond limits and create solutions
+                    that change the world.</p>
+
+            </div>
+
+            <div class="research-grid">
+
+                <img src="https://labos.co/wp-content/uploads/2025/04/LIS-Enables-Global-Teams.jpg"
+                    alt="Global Research" loading="lazy">
+                <h1>Global Research</h1>
+                <p>Connecting ideas, institutions, and innovators across the world.
+                    The Global Research division collaborates with international universities, industries, and
+                    scientific communities to produce research with global impact. Through multinational projects,
+                    shared resources, and cross-border knowledge exchange, we solve worldwide challenges and ensure our
+                    work contributes to global scientific progress.</p>
+
+            </div>
+
+            <div class="research-grid">
+
+                <img src="https://blogs.bath.ac.uk/publicengagement/wp-content/uploads/sites/130/2019/07/Blog-image-5-1200x692.jpg"
+                    alt="Publc Engagement" loading="lazy">
+                <h1>Public Engagement</h1>
+                <p>Bringing science closer to society through education and outreach.
+                    Public Engagement focuses on making research accessible, understandable, and meaningful to everyone.
+                    We organize workshops, seminars, community programs, and digital campaigns to inspire curiosity and
+                    promote scientific literacy. Our goal is to build a knowledgeable and empowered community that
+                    actively participates in scientific development.</p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <section class="facilities-section">
+        <p class="topic">Our Facilities</p>
+        <h1>World-Class Infrastructure</h1>
+        <p class="subtitle">KAUFA University provides state-of-the-art facilities designed to enhance your learning
+            experience</p>
+
+        <div class="facilities-grid">
+
+            <div class="facility-card">
+                <div class="facility-icon">
+                    <i class="fa-solid fa-book-open-reader"></i>
+                </div>
+                <h3>Modern Library</h3>
+                <p>Access over 50,000 books, digital resources, and quiet study spaces available 24/7 for all students.
+                </p>
+            </div>
+
+            <div class="facility-card">
+                <div class="facility-icon">
+                    <i class="fa-solid fa-flask"></i>
+                </div>
+                <h3>Research Labs</h3>
+                <p>Cutting-edge laboratories equipped with the latest technology for hands-on scientific research and
+                    experiments.</p>
+            </div>
+
+            <div class="facility-card">
+                <div class="facility-icon">
+                    <i class="fa-solid fa-computer"></i>
+                </div>
+                <h3>Computer Labs</h3>
+                <p>High-performance computers with industry-standard software for programming, design, and data
+                    analysis.</p>
+            </div>
+
+            <div class="facility-card">
+                <div class="facility-icon">
+                    <i class="fa-solid fa-dumbbell"></i>
+                </div>
+                <h3>Sports Complex</h3>
+                <p>Fully equipped gymnasium, indoor and outdoor sports facilities including basketball, tennis, and
+                    swimming pool.</p>
+            </div>
+
+            <div class="facility-card">
+                <div class="facility-icon">
+                    <i class="fa-solid fa-utensils"></i>
+                </div>
+                <h3>Cafeteria & Dining</h3>
+                <p>Multiple dining options offering healthy, delicious meals with vegetarian and international cuisine
+                    choices.</p>
+            </div>
+
+            <div class="facility-card">
+                <div class="facility-icon">
+                    <i class="fa-solid fa-wifi"></i>
+                </div>
+                <h3>High-Speed WiFi</h3>
+                <p>Campus-wide high-speed internet connectivity ensuring seamless online learning and research access.
+                </p>
+            </div>
+
+            <div class="facility-card">
+                <div class="facility-icon">
+                    <i class="fa-solid fa-bed"></i>
+                </div>
+                <h3>Student Housing</h3>
+                <p>Comfortable, secure on-campus accommodation with modern amenities for both local and international
+                    students.</p>
+            </div>
+
+            <div class="facility-card">
+                <div class="facility-icon">
+                    <i class="fa-solid fa-hospital"></i>
+                </div>
+                <h3>Medical Center</h3>
+                <p>On-campus health services with qualified doctors and nurses available for student wellness and
+                    emergency care.</p>
+            </div>
+
+            <div class="facility-card">
+                <div class="facility-icon">
+                    <i class="fa-solid fa-bus"></i>
+                </div>
+                <h3>Transportation</h3>
+                <p>Convenient shuttle services connecting campus to major city areas with safe and reliable transport
+                    options.</p>
+            </div>
+
+            <div class="facility-card">
+                <div class="facility-icon">
+                    <i class="fa-solid fa-theater-masks"></i>
+                </div>
+                <h3>Auditorium</h3>
+                <p>State-of-the-art auditorium with 500+ seating capacity for events, conferences, and cultural
+                    programs.</p>
+            </div>
+
+            <div class="facility-card">
+                <div class="facility-icon">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <h3>24/7 Security</h3>
+                <p>Round-the-clock security with CCTV surveillance ensuring a safe environment for all students and
+                    staff.</p>
+            </div>
+
+            <div class="facility-card">
+                <div class="facility-icon">
+                    <i class="fa-solid fa-tree"></i>
+                </div>
+                <h3>Green Campus</h3>
+                <p>Eco-friendly campus with gardens, outdoor seating areas, and sustainable practices for environmental
+                    care.</p>
+            </div>
+
+        </div>
+    </section>
+
+
+
+    <section class="fees-section" id="fees-section">
+        <p class="topic">Tuition & Fees</p>
+        <h1>Affordable Education, Priceless Future</h1>
+        <p class="subtitle">KAUFA University offers competitive tuition rates with flexible payment plans and
+            scholarship opportunities</p>
+
+        <div class="fees-grid">
+
+            <div class="fee-card">
+                <div class="fee-badge">Popular</div>
+                <div class="fee-icon">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <h3>Undergraduate Programs</h3>
+                <div class="fee-price">
+                    <span class="currency">LKR</span>
+                    <span class="amount">450,000</span>
+                    <span class="period">/ Year</span>
+                </div>
+                <ul class="fee-features">
+                    <li><i class="fa-solid fa-check"></i> Bachelor's Degree Programs</li>
+                    <li><i class="fa-solid fa-check"></i> Access to All Facilities</li>
+                    <li><i class="fa-solid fa-check"></i> Library & Online Resources</li>
+                    <li><i class="fa-solid fa-check"></i> Student Support Services</li>
+                    <li><i class="fa-solid fa-check"></i> Career Counseling</li>
+                </ul>
+                <a href="course.html" class="fee-btn">View Programs</a>
+            </div>
+
+            <div class="fee-card featured">
+                <div class="fee-badge best">Best Value</div>
+                <div class="fee-icon">
+                    <i class="fa-solid fa-user-graduate"></i>
+                </div>
+                <h3>Postgraduate Programs</h3>
+                <div class="fee-price">
+                    <span class="currency">LKR</span>
+                    <span class="amount">600,000</span>
+                    <span class="period">/ Year</span>
+                </div>
+                <ul class="fee-features">
+                    <li><i class="fa-solid fa-check"></i> Master's & PhD Programs</li>
+                    <li><i class="fa-solid fa-check"></i> Research Opportunities</li>
+                    <li><i class="fa-solid fa-check"></i> Expert Faculty Mentorship</li>
+                    <li><i class="fa-solid fa-check"></i> Conference Participation</li>
+                    <li><i class="fa-solid fa-check"></i> Publication Support</li>
+                </ul>
+                <a href="course.html" class="fee-btn">View Programs</a>
+            </div>
+
+            <div class="fee-card">
+                <div class="fee-badge">Flexible</div>
+                <div class="fee-icon">
+                    <i class="fa-solid fa-certificate"></i>
+                </div>
+                <h3>Professional Courses</h3>
+                <div class="fee-price">
+                    <span class="currency">LKR</span>
+                    <span class="amount">150,000</span>
+                    <span class="period">/ Course</span>
+                </div>
+                <ul class="fee-features">
+                    <li><i class="fa-solid fa-check"></i> Short-term Certifications</li>
+                    <li><i class="fa-solid fa-check"></i> Industry-Relevant Skills</li>
+                    <li><i class="fa-solid fa-check"></i> Flexible Schedules</li>
+                    <li><i class="fa-solid fa-check"></i> Online & On-campus</li>
+                    <li><i class="fa-solid fa-check"></i> Professional Certificate</li>
+                </ul>
+                <a href="course.html" class="fee-btn">View Programs</a>
+            </div>
+
+        </div>
+
+        <div class="fees-info">
+            <div class="info-box">
+                <i class="fa-solid fa-hand-holding-dollar"></i>
+                <h4>Scholarships Available</h4>
+                <p>Merit-based scholarships up to 50% tuition fee waiver for outstanding students</p>
+            </div>
+            <div class="info-box">
+                <i class="fa-solid fa-credit-card"></i>
+                <h4>Flexible Payment Plans</h4>
+                <p>Interest-free installment options available for all programs</p>
+            </div>
+            <div class="info-box">
+                <i class="fa-solid fa-file-invoice-dollar"></i>
+                <h4>Additional Fees</h4>
+                <p>Registration: LKR 10,000 | Exam Fees: LKR 5,000/semester</p>
+            </div>
+        </div>
+    </section>
+    <section class="accommodation-section" id="accommadation-section">
+        <p class="topic">Student Housing</p>
+        <h1>Comfortable Living, Focused Learning</h1>
+        <p class="subtitle">Safe, modern, and convenient on-campus accommodation designed for your comfort and success
+        </p>
+
+        <div class="accommodation-grid">
+
+            <div class="accommodation-card">
+                <div class="accommodation-image">
+                    <img src="https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=800" alt="Single Room">
+                    <div class="accommodation-badge">Available</div>
+                </div>
+                <div class="accommodation-content">
+                    <h3>Single Room</h3>
+                    <div class="accommodation-price">
+                        <span class="price">LKR 25,000</span>
+                        <span class="period">/ Month</span>
+                    </div>
+                    <ul class="accommodation-features">
+                        <li><i class="fa-solid fa-bed"></i> Single Bed with Mattress</li>
+                        <li><i class="fa-solid fa-computer"></i> Study Desk & Chair</li>
+                        <li><i class="fa-solid fa-wind"></i> Air Conditioning</li>
+                        <li><i class="fa-solid fa-wifi"></i> High-Speed WiFi</li>
+                        <li><i class="fa-solid fa-door-closed"></i> Private Bathroom</li>
+                        <li><i class="fa-solid fa-box"></i> Storage Wardrobe</li>
+                    </ul>
+                    <a href="STDregister.html" class="accommodation-btn">Apply Now</a>
+                </div>
+            </div>
+
+            <div class="accommodation-card featured">
+                <div class="accommodation-image">
+                    <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800" alt="Twin Sharing">
+                    <div class="accommodation-badge popular">Most Popular</div>
+                </div>
+                <div class="accommodation-content">
+                    <h3>Twin Sharing Room</h3>
+                    <div class="accommodation-price">
+                        <span class="price">LKR 18,000</span>
+                        <span class="period">/ Month</span>
+                    </div>
+                    <ul class="accommodation-features">
+                        <li><i class="fa-solid fa-bed"></i> Two Single Beds</li>
+                        <li><i class="fa-solid fa-computer"></i> Individual Study Areas</li>
+                        <li><i class="fa-solid fa-wind"></i> Air Conditioning</li>
+                        <li><i class="fa-solid fa-wifi"></i> High-Speed WiFi</li>
+                        <li><i class="fa-solid fa-door-closed"></i> Shared Bathroom</li>
+                        <li><i class="fa-solid fa-box"></i> Personal Storage Space</li>
+                    </ul>
+                    <a href="STDregister.html" class="accommodation-btn">Apply Now</a>
+                </div>
+            </div>
+
+            <div class="accommodation-card">
+                <div class="accommodation-image">
+                    <img src="https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=800" alt="Triple Sharing">
+                    <div class="accommodation-badge">Budget</div>
+                </div>
+                <div class="accommodation-content">
+                    <h3>Triple Sharing Room</h3>
+                    <div class="accommodation-price">
+                        <span class="price">LKR 15,000</span>
+                        <span class="period">/ Month</span>
+                    </div>
+                    <ul class="accommodation-features">
+                        <li><i class="fa-solid fa-bed"></i> Three Single Beds</li>
+                        <li><i class="fa-solid fa-computer"></i> Shared Study Table</li>
+                        <li><i class="fa-solid fa-fan"></i> Ceiling Fans</li>
+                        <li><i class="fa-solid fa-wifi"></i> High-Speed WiFi</li>
+                        <li><i class="fa-solid fa-door-closed"></i> Shared Bathroom</li>
+                        <li><i class="fa-solid fa-box"></i> Personal Storage Space</li>
+                    </ul>
+                    <a href="STDregister.html" class="accommodation-btn">Apply Now</a>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="hostel-facilities">
+            <h2>Hostel Facilities & Amenities</h2>
+            <div class="facilities-list">
+                <div class="facility-item">
+                    <i class="fa-solid fa-utensils"></i>
+                    <span>Dining Hall & Mess</span>
+                </div>
+                <div class="facility-item">
+                    <i class="fa-solid fa-shirt"></i>
+                    <span>Laundry Service</span>
+                </div>
+                <div class="facility-item">
+                    <i class="fa-solid fa-dumbbell"></i>
+                    <span>Gym & Recreation</span>
+                </div>
+                <div class="facility-item">
+                    <i class="fa-solid fa-book"></i>
+                    <span>Common Study Room</span>
+                </div>
+                <div class="facility-item">
+                    <i class="fa-solid fa-tv"></i>
+                    <span>TV & Entertainment</span>
+                </div>
+                <div class="facility-item">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <span>24/7 Security</span>
+                </div>
+                <div class="facility-item">
+                    <i class="fa-solid fa-first-aid"></i>
+                    <span>Medical Support</span>
+                </div>
+                <div class="facility-item">
+                    <i class="fa-solid fa-parking"></i>
+                    <span>Parking Space</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <section class="admission1" id="admission">
+        <div class="instructor">
+            <div class="insdiv">
+                <i class="fa-solid fa-people-group"></i>
+                <span>Become an Instructor</span>
+            </div>
+            <p>We invite dedicated educators, industry experts, and passionate trainers to apply for instructor
+                admission. <br><br>
+                If you love teaching and want to shape the future of learners, this is the right place for you.</p>
+            <div class="btn">
+                <a href="lecadmission.html.html">
+                    <button class="btn1">Start Teaching</button>
+                </a>
+            </div>
+
+        </div>
+
+        <hr class="center-line">
+
+        <div class="admission">
+            <div class="insdiv">
+                <i class="fa-solid fa-graduation-cap"></i>
+                <span>Apply for Admission</span>
+            </div>
+            <p>We welcome passionate students who are ready to learn, grow, and build a successful future. <br><br>
+                Our admission
+                process is simple, transparent, and designed to help you join the program that best fits your goals.</p>
+            <div class="btn">
+                <a href="stdadmission.html">
+                    <button class="btn2">Apply Now</button>
+                </a>
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <section id="contact-section">
+        <div class="contact1">
+            <img src="2.png" alt="logo">
+            <h1>Follow Us</h1><br>
+            <a href=""><i class="fa-brands fa-facebook-f"></i></a>
+            <a href=""><i class="fa-brands fa-twitter"></i></a>
+            <a href=""><i class="fa-brands fa-linkedin-in"></i></a>
+        </div>
+        <div class="contact2">
+            <h1>Explore</h1><br>
+            <ul>
+                <a href="blog.html">
+                    <li>Blog</li>
+                </a>
+                <a href="#about">
+                    <li>About</li>
+                </a>
+                <a href="#contact">
+                    <li>Contact</li>
+                </a>
+                <a href="login.html">
+                    <li>Team</li>
+                </a>
+            </ul>
+        </div>
+        <div class="contact3">
+            <h1>Links</h1><br>
+            <ul>
+                <a href="#about">
+                    <li>About</li>
+                </a>
+                <a href="#contact">
+                    <li>Contact</li>
+                </a>
+                <a href="course.html">
+                    <li>Course Details</li>
+                </a>
+                <a href="blog.html">
+                    <li>Blog</li>
+                </a>
+            </ul>
+        </div>
+        <div class="contact4">
+            <h1>Sign up for our newsletter</h1><br>
+            <p class="content">Receive weekly newsletter with educational materials, popular books and much more!</p>
+            <br>
+
+            <form class="input-box">
+                <input type="text" placeholder="Email">
+                <button type="submit">
+                    Submit
+                </button>
+            </form>
+
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

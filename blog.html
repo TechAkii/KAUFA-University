@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - KAUFA University</title>
+
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="icon" type="image/png" href="2.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --green: #2e7d32;
+            --green-light: #4caf50;
+            --green-pale: #e8f5e9;
+            --dark: #1a1a2e;
+            --text: #333;
+            --muted: #666;
+            --border: #e0e0e0;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            color: var(--text);
+            background: #fafafa;
+        }
+
+        /* ── HEADER (matches main.html) ── */
+        header {
+            background: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 40px;
+            border-bottom: 1px solid var(--border);
+        }
+        .mail-location a {
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            margin-right: 12px;
+        }
+        .mail-location a:hover { color: var(--green); }
+        .header-buttons { display: flex; gap: 12px; align-items: center; }
+        .login-btn a {
+            text-decoration: none;
+            color: var(--green);
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        .contact-btn {
+            background: var(--green);
+            color: #fff;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.2s;
+        }
+        .contact-btn:hover { background: #1b5e20; }
+
+        /* ── HERO ── */
+        .blog-hero {
+            background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 50%, #388e3c 100%);
+            color: #fff;
+            text-align: center;
+            padding: 90px 20px 80px;
+            position: relative;
+            overflow: hidden;
+        }
+        .blog-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        .blog-hero .topic {
+            font-size: 0.85rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            opacity: 0.75;
+            margin-bottom: 12px;
+        }
+        .blog-hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            margin-bottom: 16px;
+            position: relative;
+        }
+        .blog-hero p {
+            opacity: 0.85;
+            font-size: 1.05rem;
+            max-width: 520px;
+            margin: 0 auto 32px;
+        }
+        .search-bar {
+            display: flex;
+            justify-content: center;
+            gap: 0;
+            max-width: 480px;
+            margin: 0 auto;
+        }
+        .search-bar input {
+            flex: 1;
+            padding: 13px 20px;
+            border: none;
+            border-radius: 50px 0 0 50px;
+            font-size: 0.95rem;
+            outline: none;
+        }
+        .search-bar button {
+            padding: 13px 24px;
+            background: #ff8f00;
+            color: #fff;
+            border: none;
+            border-radius: 0 50px 50px 0;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+        .search-bar button:hover { background: #e65100; }
+
+        /* ── FILTER TABS ── */
+        .filter-section {
+            background: #fff;
+            border-bottom: 1px solid var(--border);
+            padding: 0 40px;
+            display: flex;
+            gap: 0;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+        .filter-section::-webkit-scrollbar { display: none; }
+        .filter-tab {
+            padding: 16px 22px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--muted);
+            border-bottom: 3px solid transparent;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s;
+            background: none;
+            border-left: none;
+            border-right: none;
+            border-top: none;
+        }
+        .filter-tab:hover { color: var(--green); }
+        .filter-tab.active {
+            color: var(--green);
+            border-bottom-color: var(--green);
+        }
+
+        /* ── FEATURED POST ── */
+        .featured-section {
+            max-width: 1200px;
+            margin: 52px auto 0;
+            padding: 0 24px;
+        }
+        .section-label {
+            font-size: 0.8rem;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--green);
+            font-weight: 600;
+            margin-bottom: 24px;
+        }
+        .featured-card {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            background: #fff;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+            margin-bottom: 60px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .featured-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.13);
+        }
+        .featured-image {
+            position: relative;
+            overflow: hidden;
+        }
+        .featured-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            min-height: 380px;
+            transition: transform 0.5s;
+        }
+        .featured-card:hover .featured-image img { transform: scale(1.04); }
+        .featured-badge {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: var(--green);
+            color: #fff;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 5px 14px;
+            border-radius: 50px;
+            letter-spacing: 0.5px;
+        }
+        .featured-content {
+            padding: 48px 44px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .post-meta {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 0.82rem;
+            color: var(--muted);
+            margin-bottom: 16px;
+        }
+        .post-category {
+            color: var(--green);
+            font-weight: 600;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .featured-content h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.9rem;
+            line-height: 1.3;
+            margin-bottom: 16px;
+            color: var(--dark);
+        }
+        .featured-content p {
+            color: var(--muted);
+            line-height: 1.7;
+            margin-bottom: 28px;
+            font-size: 0.97rem;
+        }
+        .read-more-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--green);
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: gap 0.2s;
+        }
+        .read-more-btn:hover { gap: 14px; color: #1b5e20; }
+        .author-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+        }
+        .author-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .author-info { font-size: 0.85rem; }
+        .author-info strong { display: block; color: var(--dark); }
+        .author-info span { color: var(--muted); }
+
+        /* ── BLOG GRID ── */
+        .blog-grid-section {
+            max-width: 1200px;
+            margin: 0 auto 80px;
+            padding: 0 24px;
+        }
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 28px;
+        }
+        .blog-card {
+            background: #fff;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 2px 14px rgba(0,0,0,0.06);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+        .blog-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 14px 36px rgba(0,0,0,0.12);
+        }
+        .card-image {
+            position: relative;
+            overflow: hidden;
+        }
+        .card-image img {
+            width: 100%;
+            height: 210px;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        .blog-card:hover .card-image img { transform: scale(1.06); }
+        .card-cat {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            background: rgba(255,255,255,0.92);
+            color: var(--green);
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 50px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        .card-body {
+            padding: 24px;
+        }
+        .card-meta {
+            font-size: 0.78rem;
+            color: var(--muted);
+            margin-bottom: 10px;
+            display: flex;
+            gap: 14px;
+        }
+        .card-body h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.15rem;
+            line-height: 1.4;
+            color: var(--dark);
+            margin-bottom: 10px;
+        }
+        .card-body p {
+            font-size: 0.87rem;
+            color: var(--muted);
+            line-height: 1.65;
+            margin-bottom: 18px;
+        }
+        .card-footer-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
+        }
+        .card-author {
+            font-size: 0.82rem;
+            color: var(--muted);
+        }
+        .card-link {
+            color: var(--green);
+            font-size: 0.82rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: gap 0.2s;
+        }
+        .card-link:hover { gap: 9px; }
+
+        /* ── SIDEBAR LAYOUT (for wide view) ── */
+        .content-sidebar-layout {
+            max-width: 1200px;
+            margin: 0 auto 80px;
+            padding: 0 24px;
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 40px;
+        }
+
+        /* ── NEWSLETTER STRIP ── */
+        .newsletter-strip {
+            background: linear-gradient(135deg, #1b5e20, #2e7d32);
+            color: #fff;
+            padding: 60px 40px;
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        .newsletter-strip h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.9rem;
+            margin-bottom: 10px;
+        }
+        .newsletter-strip p {
+            opacity: 0.85;
+            margin-bottom: 28px;
+            font-size: 1rem;
+        }
+        .newsletter-form {
+            display: flex;
+            justify-content: center;
+            gap: 0;
+            max-width: 440px;
+            margin: 0 auto;
+        }
+        .newsletter-form input {
+            flex: 1;
+            padding: 13px 20px;
+            border: none;
+            border-radius: 6px 0 0 6px;
+            font-size: 0.9rem;
+            outline: none;
+        }
+        .newsletter-form button {
+            padding: 13px 24px;
+            background: #ff8f00;
+            color: #fff;
+            border: none;
+            border-radius: 0 6px 6px 0;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .newsletter-form button:hover { background: #e65100; }
+
+        /* ── SIDEBAR ── */
+        .sidebar { display: flex; flex-direction: column; gap: 32px; }
+        .sidebar-widget {
+            background: #fff;
+            border-radius: 14px;
+            padding: 28px;
+            box-shadow: 0 2px 14px rgba(0,0,0,0.06);
+        }
+        .widget-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--green-pale);
+            color: var(--dark);
+        }
+        .popular-post {
+            display: flex;
+            gap: 14px;
+            margin-bottom: 18px;
+            align-items: flex-start;
+        }
+        .popular-post:last-child { margin-bottom: 0; }
+        .popular-post img {
+            width: 70px;
+            height: 56px;
+            object-fit: cover;
+            border-radius: 8px;
+            flex-shrink: 0;
+        }
+        .popular-post-info h4 {
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--dark);
+            line-height: 1.4;
+            margin-bottom: 4px;
+        }
+        .popular-post-info span { font-size: 0.78rem; color: var(--muted); }
+        .tag-cloud { display: flex; flex-wrap: wrap; gap: 8px; }
+        .tag {
+            background: var(--green-pale);
+            color: var(--green);
+            font-size: 0.8rem;
+            padding: 6px 14px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+        .tag:hover { background: var(--green); color: #fff; }
+        .cat-list { list-style: none; }
+        .cat-list li {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.9rem;
+        }
+        .cat-list li:last-child { border-bottom: none; }
+        .cat-list a { text-decoration: none; color: var(--text); transition: color 0.2s; }
+        .cat-list a:hover { color: var(--green); }
+        .cat-count {
+            background: var(--green-pale);
+            color: var(--green);
+            font-size: 0.75rem;
+            padding: 2px 9px;
+            border-radius: 50px;
+            font-weight: 600;
+        }
+
+        /* ── LOAD MORE ── */
+        .load-more-wrap { text-align: center; margin: 40px 0 60px; }
+        .load-more-btn {
+            background: #fff;
+            border: 2px solid var(--green);
+            color: var(--green);
+            padding: 13px 40px;
+            border-radius: 50px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s;
+        }
+        .load-more-btn:hover {
+            background: var(--green);
+            color: #fff;
+        }
+
+        /* ── FOOTER (matches main) ── */
+        #contact-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 32px;
+            justify-content: space-between;
+            background: #1a1a2e;
+            color: #ccc;
+            padding: 60px 60px 40px;
+        }
+        #contact-section h1 { font-size: 1.1rem; font-weight: 700; color: #fff; margin-bottom: 12px; }
+        #contact-section a { color: #bbb; text-decoration: none; transition: color 0.2s; }
+        #contact-section a:hover { color: #4caf50; }
+        #contact-section ul { list-style: none; }
+        #contact-section ul li { margin-bottom: 8px; font-size: 0.9rem; }
+        .contact4 .input-box { display: flex; gap: 0; margin-top: 12px; }
+        .contact4 .input-box input {
+            padding: 10px 16px;
+            border: none;
+            border-radius: 4px 0 0 4px;
+            font-size: 0.9rem;
+            width: 200px;
+        }
+        .contact4 .input-box button {
+            background: var(--green);
+            color: #fff;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .contact4 p { font-size: 0.88rem; line-height: 1.6; }
+        .contact1 img { height: 50px; margin-bottom: 8px; }
+        .contact1 a {
+            font-size: 1.1rem;
+            margin-right: 10px;
+            color: #bbb;
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 992px) {
+            .featured-card { grid-template-columns: 1fr; }
+            .featured-image img { min-height: 260px; }
+            .blog-grid { grid-template-columns: repeat(2, 1fr); }
+            .content-sidebar-layout { grid-template-columns: 1fr; }
+            .sidebar { display: grid; grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 640px) {
+            header { flex-direction: column; gap: 8px; padding: 12px 20px; }
+            .blog-grid { grid-template-columns: 1fr; }
+            .sidebar { grid-template-columns: 1fr; }
+            .filter-section { padding: 0 16px; }
+            .featured-content { padding: 28px 24px; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="mail-location">
+            <a href="mailto:info@kaufa.com"><i class="fa-regular fa-envelope"></i>&nbsp; info@kaufa.com</a>
+            &nbsp;&nbsp;&nbsp;
+            <a href="https://www.google.com/maps/place/Bentota/">
+                <i class="fa-solid fa-location-dot"></i>&nbsp; Sirisewana, Bentota, Sri Lanka</a>
+        </div>
+        <div class="header-buttons">
+            <div class="login-btn">
+                <a href="login.html"><i class="fa-regular fa-user"></i> <span>Login</span></a>
+            </div>
+            <a href="#contact-section"><button class="contact-btn">Contact Us</button></a>
+        </div>
+    </header>
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="main.html"><img src="1.png" alt="logo" style="height:60px; padding:0; margin:0;"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
+                aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarScroll">
+                <ul class="navbar-nav mx-auto my-3 my-lg-2 navbar-nav-scroll" style="--bs-scroll-height: 170px;">
+                    <li class="nav-item mx-3"><a class="nav-link" href="main.html#home">Home</a></li>
+                    <li class="nav-item mx-3"><a class="nav-link" href="main.html#about">About Us</a></li>
+                    <li class="nav-item mx-3"><a class="nav-link" href="main.html#gallery-section">Facilities</a></li>
+                    <li class="nav-item mx-3"><a class="nav-link" href="main.html#accommadation-section">Accomadations</a></li>
+                    <li class="nav-item mx-3"><a class="nav-link" href="main.html#fees-section">Courses</a></li>
+                    <li class="nav-item mx-3"><a class="nav-link active" aria-current="page" href="blog.html">Blog</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Admission</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="main.html#admission">Academic staff</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="main.html#admission">Students</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="blog-hero">
+        <p class="topic">KAUFA University</p>
+        <h1>News, Stories & Insights</h1>
+        <p>Stay updated with the latest from our campus — research breakthroughs, student achievements, and university life.</p>
+        <div class="search-bar">
+            <input type="text" placeholder="Search articles, topics, people…">
+            <button><i class="fa-solid fa-magnifying-glass"></i> Search</button>
+        </div>
+    </section>
+
+    <!-- FILTER TABS -->
+    <div class="filter-section">
+        <button class="filter-tab active" onclick="filterPosts('all', this)">All Posts</button>
+        <button class="filter-tab" onclick="filterPosts('news', this)">University News</button>
+        <button class="filter-tab" onclick="filterPosts('research', this)">Research</button>
+        <button class="filter-tab" onclick="filterPosts('student', this)">Student Life</button>
+        <button class="filter-tab" onclick="filterPosts('faculty', this)">Faculty</button>
+        <button class="filter-tab" onclick="filterPosts('events', this)">Events</button>
+    </div>
+
+    <!-- FEATURED POST -->
+    <section class="featured-section">
+        <p class="section-label"><i class="fa-solid fa-star"></i>&nbsp; Featured Article</p>
+        <div class="featured-card">
+            <div class="featured-image">
+                <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=900" alt="Featured">
+                <span class="featured-badge">Featured</span>
+            </div>
+            <div class="featured-content">
+                <div class="post-meta">
+                    <span class="post-category">University News</span>
+                    <span><i class="fa-regular fa-calendar"></i> February 20, 2026</span>
+                    <span><i class="fa-regular fa-clock"></i> 6 min read</span>
+                </div>
+                <h2>KAUFA Launches New AI & Machine Learning Research Centre</h2>
+                <p>KAUFA University is proud to announce the inauguration of its state-of-the-art Artificial Intelligence and Machine Learning Research Centre — a landmark milestone in the university's commitment to innovation, technology education, and globally relevant research.</p>
+                <a href="#" class="read-more-btn">Read Full Article <i class="fa-solid fa-arrow-right"></i></a>
+                <div class="author-row">
+                    <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=80" alt="Author" class="author-avatar">
+                    <div class="author-info">
+                        <strong>Dr. Amara Perera</strong>
+                        <span>Head of Communications</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BLOG GRID + SIDEBAR -->
+    <div class="content-sidebar-layout">
+        <!-- Main Grid -->
+        <div>
+            <p class="section-label" style="margin-bottom:24px;"><i class="fa-solid fa-newspaper"></i>&nbsp; Latest Articles</p>
+            <div class="blog-grid" id="blogGrid">
+
+                <div class="blog-card" data-cat="research">
+                    <div class="card-image">
+                        <img src="https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=600" alt="Nanotechnology">
+                        <span class="card-cat">Research</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span><i class="fa-regular fa-calendar"></i> Feb 15, 2026</span>
+                            <span><i class="fa-regular fa-clock"></i> 5 min read</span>
+                        </div>
+                        <h3>Breakthrough in Nanotechnology: KAUFA Team Develops New Drug Delivery System</h3>
+                        <p>Our researchers have achieved a milestone in nano-medicine with a novel targeted drug delivery approach that could revolutionize cancer treatment.</p>
+                        <div class="card-footer-row">
+                            <span class="card-author"><i class="fa-regular fa-user"></i> Prof. Nimal Silva</span>
+                            <a href="#" class="card-link">Read More <i class="fa-solid fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="blog-card" data-cat="student">
+                    <div class="card-image">
+                        <img src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=600" alt="Graduation">
+                        <span class="card-cat">Student Life</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span><i class="fa-regular fa-calendar"></i> Feb 10, 2026</span>
+                            <span><i class="fa-regular fa-clock"></i> 3 min read</span>
+                        </div>
+                        <h3>Class of 2026 Graduation Ceremony: A Day to Remember</h3>
+                        <p>Over 400 graduates celebrated their achievements at KAUFA's annual graduation ceremony, marking the beginning of their professional journeys.</p>
+                        <div class="card-footer-row">
+                            <span class="card-author"><i class="fa-regular fa-user"></i> Kavindi Fernando</span>
+                            <a href="#" class="card-link">Read More <i class="fa-solid fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="blog-card" data-cat="faculty">
+                    <div class="card-image">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600" alt="Faculty">
+                        <span class="card-cat">Faculty</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span><i class="fa-regular fa-calendar"></i> Feb 7, 2026</span>
+                            <span><i class="fa-regular fa-clock"></i> 4 min read</span>
+                        </div>
+                        <h3>Faculty Spotlight: Dr. Ravi Mendis — Pioneering Medical Science Education</h3>
+                        <p>We sit down with Dr. Ravi Mendis to learn about his 20-year journey in medical education and his vision for the future of healthcare training in Sri Lanka.</p>
+                        <div class="card-footer-row">
+                            <span class="card-author"><i class="fa-regular fa-user"></i> Editorial Team</span>
+                            <a href="#" class="card-link">Read More <i class="fa-solid fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="blog-card" data-cat="events">
+                    <div class="card-image">
+                        <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600" alt="Event">
+                        <span class="card-cat">Events</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span><i class="fa-regular fa-calendar"></i> Feb 3, 2026</span>
+                            <span><i class="fa-regular fa-clock"></i> 2 min read</span>
+                        </div>
+                        <h3>TechFest 2026: KAUFA's Annual Innovation & Technology Festival</h3>
+                        <p>Students from all faculties showcased projects, competed in hackathons, and attended keynote talks at this year's most anticipated campus event.</p>
+                        <div class="card-footer-row">
+                            <span class="card-author"><i class="fa-regular fa-user"></i> Events Team</span>
+                            <a href="#" class="card-link">Read More <i class="fa-solid fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="blog-card" data-cat="news">
+                    <div class="card-image">
+                        <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=600" alt="Partnership">
+                        <span class="card-cat">University News</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span><i class="fa-regular fa-calendar"></i> Jan 28, 2026</span>
+                            <span><i class="fa-regular fa-clock"></i> 4 min read</span>
+                        </div>
+                        <h3>KAUFA Signs MoU with International Universities for Student Exchange Program</h3>
+                        <p>Students will soon be able to study abroad as KAUFA formalizes partnerships with five leading universities across Asia and Europe.</p>
+                        <div class="card-footer-row">
+                            <span class="card-author"><i class="fa-regular fa-user"></i> Admin Office</span>
+                            <a href="#" class="card-link">Read More <i class="fa-solid fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="blog-card" data-cat="student">
+                    <div class="card-image">
+                        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600" alt="Student clubs">
+                        <span class="card-cat">Student Life</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span><i class="fa-regular fa-calendar"></i> Jan 22, 2026</span>
+                            <span><i class="fa-regular fa-clock"></i> 3 min read</span>
+                        </div>
+                        <h3>How Student Clubs at KAUFA Are Shaping Future Leaders</h3>
+                        <p>From the Coding Club to the Debate Society, discover how extracurricular life at KAUFA is building well-rounded graduates ready for the world.</p>
+                        <div class="card-footer-row">
+                            <span class="card-author"><i class="fa-regular fa-user"></i> Dilshan Rathnayake</span>
+                            <a href="#" class="card-link">Read More <i class="fa-solid fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="load-more-wrap">
+                <button class="load-more-btn"><i class="fa-solid fa-rotate"></i>&nbsp; Load More Articles</button>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+
+            <div class="sidebar-widget">
+                <h3 class="widget-title">Popular Posts</h3>
+                <div class="popular-post">
+                    <img src="https://images.unsplash.com/photo-1571260899304-425eee4c7efc?w=200" alt="Post">
+                    <div class="popular-post-info">
+                        <h4>5 Reasons to Study Computer Science at KAUFA</h4>
+                        <span><i class="fa-regular fa-calendar"></i> Jan 10, 2026</span>
+                    </div>
+                </div>
+                <div class="popular-post">
+                    <img src="https://images.unsplash.com/photo-1498243691581-b145c3f54a5a?w=200" alt="Post">
+                    <div class="popular-post-info">
+                        <h4>A Tour of KAUFA's New Science Library</h4>
+                        <span><i class="fa-regular fa-calendar"></i> Dec 18, 2025</span>
+                    </div>
+                </div>
+                <div class="popular-post">
+                    <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=200" alt="Post">
+                    <div class="popular-post-info">
+                        <h4>Scholarship Guide: How to Apply for 2026</h4>
+                        <span><i class="fa-regular fa-calendar"></i> Dec 5, 2025</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar-widget">
+                <h3 class="widget-title">Categories</h3>
+                <ul class="cat-list">
+                    <li><a href="#">University News</a><span class="cat-count">12</span></li>
+                    <li><a href="#">Research</a><span class="cat-count">9</span></li>
+                    <li><a href="#">Student Life</a><span class="cat-count">14</span></li>
+                    <li><a href="#">Faculty Spotlights</a><span class="cat-count">6</span></li>
+                    <li><a href="#">Events</a><span class="cat-count">8</span></li>
+                    <li><a href="#">Admissions</a><span class="cat-count">4</span></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-widget">
+                <h3 class="widget-title">Tags</h3>
+                <div class="tag-cloud">
+                    <span class="tag">AI & ML</span>
+                    <span class="tag">Research</span>
+                    <span class="tag">Campus Life</span>
+                    <span class="tag">Nanotechnology</span>
+                    <span class="tag">Medical</span>
+                    <span class="tag">Scholarships</span>
+                    <span class="tag">Events</span>
+                    <span class="tag">Graduation</span>
+                    <span class="tag">Sri Lanka</span>
+                    <span class="tag">Tech</span>
+                </div>
+            </div>
+
+        </aside>
+    </div>
+
+    <!-- NEWSLETTER -->
+    <div class="newsletter-strip">
+        <h2>Subscribe to Our Newsletter</h2>
+        <p>Receive weekly updates with educational insights, campus news, and much more.</p>
+        <div class="newsletter-form">
+            <input type="email" placeholder="Enter your email address">
+            <button>Subscribe</button>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <section id="contact-section">
+        <div class="contact1">
+            <img src="2.png" alt="logo">
+            <h1>Follow Us</h1><br>
+            <a href=""><i class="fa-brands fa-facebook-f"></i></a>
+            <a href=""><i class="fa-brands fa-twitter"></i></a>
+            <a href=""><i class="fa-brands fa-linkedin-in"></i></a>
+        </div>
+        <div class="contact2">
+            <h1>Explore</h1><br>
+            <ul>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="main.html#about">About</a></li>
+                <li><a href="#contact-section">Contact</a></li>
+                <li><a href="login.html">Team</a></li>
+            </ul>
+        </div>
+        <div class="contact3">
+            <h1>Links</h1><br>
+            <ul>
+                <li><a href="main.html#about">About</a></li>
+                <li><a href="#contact-section">Contact</a></li>
+                <li><a href="course.html">Course Details</a></li>
+                <li><a href="blog.html">Blog</a></li>
+            </ul>
+        </div>
+        <div class="contact4">
+            <h1>Sign up for our newsletter</h1><br>
+            <p class="content">Receive weekly newsletter with educational materials, popular books and much more!</p>
+            <br>
+            <form class="input-box">
+                <input type="text" placeholder="Email">
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+
+    <script>
+        function filterPosts(cat, el) {
+            // Update active tab
+            document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+            el.classList.add('active');
+
+            // Filter cards
+            document.querySelectorAll('.blog-card').forEach(card => {
+                if (cat === 'all' || card.dataset.cat === cat) {
+                    card.style.display = 'block';
+                    card.style.animation = 'fadeIn 0.4s ease';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Search functionality
+        document.querySelector('.search-bar button').addEventListener('click', function () {
+            const query = document.querySelector('.search-bar input').value.toLowerCase();
+            if (!query) return;
+            document.querySelectorAll('.blog-card').forEach(card => {
+                const text = card.innerText.toLowerCase();
+                card.style.display = text.includes(query) ? 'block' : 'none';
+            });
+        });
+
+        // Smooth card entrance on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.style.opacity = '1';
+                    e.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.blog-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(24px)';
+            card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>
