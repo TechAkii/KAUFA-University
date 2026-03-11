@@ -143,6 +143,14 @@ header a:hover {
     z-index: 10;
     padding-left: 50px;
 }
+.slide-content a{
+    text-decoration: none;
+    text-shadow: 1px 1px 2px #fff;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 19px;
+    background-color: #38a169;
+    padding: 15px 20px;
+}
 
 .slide-content span {
     letter-spacing: 2px;
