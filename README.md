@@ -179,13 +179,14 @@ BSc Applied Science Undergraduate
 Rajarata University of Sri Lanka
 
 GitHub:  
+```
 https://github.com/TechAkii
-
+```
 ---
 
 # ⭐ Support
 
-If you like this project, please consider giving it a **star ⭐ on GitHub**.
+If you like this project, please consider giving it a **star ⭐ on GitHub.
 
 ---
 
