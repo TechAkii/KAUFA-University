@@ -144,20 +144,6 @@ http://localhost/KAUFA-University
 
 ---
 
-# 📸 Screenshots
-
-Example preview images.
-
-```
-
-```
-
-```
-
-```
-
----
-
 # 🔮 Future Improvements
 
 Possible improvements for the project include:
