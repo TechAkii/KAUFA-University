@@ -71,57 +71,6 @@ KAUFA-University/
 
 ---
 
-# 🚀 Installation Guide
-
-Follow these steps to run the project locally.
-
-## 1. Clone the repository
-
-```
-git clone https://github.com/TechAkii/KAUFA-University.git
-```
-
----
-
-## 2. Move the project folder
-
-Move the folder into your local server directory.
-
-### For WAMP
-
-```
-C:\wamp64\www\
-```
-
-### For XAMPP
-
-```
-C:\xampp\htdocs\
-```
-
----
-
-## 3. Start the server
-
-Start the following services:
-
-- Apache
-- MySQL
-
-Using **WAMP** or **XAMPP** control panel.
-
----
-
-## 4. Run the project
-
-Open your browser and visit:
-
-```
-http://localhost/KAUFA-University
-```
-
----
-
 # ✨ Key Features
 
 ### Student System
@@ -142,20 +91,6 @@ http://localhost/KAUFA-University
 - Simple navigation system
 - Form-based interaction
 
----
-
-# 🔮 Future Improvements
-
-Possible improvements for the project include:
-
-- Database integration with MySQL
-- Admin dashboard
-- Role-based authentication
-- Course enrollment system
-- Student dashboard
-- Lecturer dashboard
-- API integration
-- Mobile responsive improvements
 
 ---
 
