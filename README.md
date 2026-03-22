@@ -94,6 +94,111 @@ KAUFA-University/
 
 ---
 
+## 🚀 Installation Guide
+
+### 1️⃣ Clone the repository
+
+```bash
+git clone https://github.com/TechAkii/KAUFA-University.git
+```
+
+---
+
+### 2️⃣ Move the project to local server
+
+#### For WAMP
+
+```
+C:\wamp64\www\
+```
+
+#### For XAMPP
+
+```
+C:\xampp\htdocs\
+```
+
+---
+
+### 3️⃣ Start server
+
+Start:
+
+- Apache  
+- MySQL  
+
+---
+
+### 4️⃣ Open in browser
+
+```
+http://localhost/KAUFA-University
+```
+
+---
+
+## 🗄️ Database Setup
+
+### 1. Create database
+
+Open **phpMyAdmin → SQL tab**, then run:
+
+```sql
+CREATE DATABASE kaufa_university;
+USE kaufa_university;
+```
+
+---
+
+### 2. Create tables
+
+```sql
+CREATE TABLE users (
+    user_id INT AUTO_INCREMENT PRIMARY KEY,
+    full_name VARCHAR(100),
+    email VARCHAR(100) UNIQUE,
+    password VARCHAR(255),
+    role VARCHAR(20),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE students (
+    student_id INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(50),
+    last_name VARCHAR(50),
+    email VARCHAR(100),
+    phone VARCHAR(20),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE lecturers (
+    lecturer_id INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(50),
+    last_name VARCHAR(50),
+    email VARCHAR(100),
+    department VARCHAR(100),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+---
+
+### 3. Database connection (PHP)
+
+Create `db.php`:
+
+```php
+<?php
+$conn = mysqli_connect("localhost", "root", "", "kaufa_university");
+
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+?>
+```
+
+---
+
 # 🎯 Learning Objectives
 
 This project helps developers understand:
